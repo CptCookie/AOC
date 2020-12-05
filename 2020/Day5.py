@@ -2,12 +2,8 @@ import requests
 import re
 from const import token
 
-SEATS_ROWS = [n for n in range(128)]
-SEATS_COLS = [n for n in range(8)]
-
 FRONT_HALF = 'F'
 BACK_HALF = 'B'
-
 LEFT_HALF = 'L'
 RIGHT_HALF = 'R'
 
@@ -18,33 +14,15 @@ def get_aoc_input():
 def get_ID(seat_code):
     row = re.compile(r'^[FB]{7}').findall(seat_code)[0]
     col = re.compile(r'[RL]{3}$').findall(seat_code)[0]
-    return get_row(row) * 8 + get_col(col)
+    return get_row(row) * 8 + get_seat(col)
 
 def get_row(seat_code, area=SEATS_ROWS):
-    if seat_code == '': 
-        if len(area) == 1:
-            return area[0] 
-        else: 
-            raise IndexError('Incorrect seat_code')
+    seat_code = seat_code.replace(BACK_HALF, '1').replace(FRONT_HALF, '0')
+    return int(seat_code, base=2)
 
-    elif seat_code[0] == FRONT_HALF:
-        return get_row(seat_code[1:], area=area[:int(len(area)/2)])
-    elif seat_code[0] == BACK_HALF:
-        return get_row(seat_code[1:], area=area[int(len(area)/2):])
-        
-    
-
-def get_col(seat_code, area=SEATS_COLS):
-    if seat_code == '': 
-        if len(area) == 1:
-            return area[0] 
-        else: 
-            raise IndexError('Incorrect seat_code')
-
-    elif seat_code[0] == LEFT_HALF:
-        return get_col(seat_code[1:], area=area[:int(len(area)/2)])
-    elif seat_code[0] == RIGHT_HALF:
-        return get_col(seat_code[1:], area=area[int(len(area)/2):])
+def get_seat(seat_code):
+    seat_code = seat_code.replace(RIGHT_HALF, '1').replace(LEFT_HALF, '0')
+    return int(seat_code, base=2)
 
 def test_row():
     assert(get_row('FBFBBFF') == 44)
@@ -53,11 +31,11 @@ def test_row():
     assert(get_row('BBFFBBF') == 102)
 
 
-def test_col():
-    assert(get_col('RLR') == 5)
-    assert(get_col('RRR') == 7)
-    assert(get_col('RRR') == 7)
-    assert(get_col('RLL') == 4)
+def test_seat():
+    assert(get_seat('RLR') == 5)
+    assert(get_seat('RRR') == 7)
+    assert(get_seat('RRR') == 7)
+    assert(get_seat('RLL') == 4)
 
 def test_ID():
     assert(get_ID('FBFBBFFRLR') == 357)

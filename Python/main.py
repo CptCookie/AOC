@@ -16,11 +16,11 @@ def get_input_http(year, day):
         raise requests.exceptions.ConnectionError('Token might be too old.')
 
 def get_input(year, day):
-    if f'{year}-{day}.txt' in os.listdir('./cache'):
-        with open(f'./cache/{year}-{day}.txt', 'r') as f:
+    if f'{year}-{day}.txt' in os.listdir('./python/cache'):
+        with open(f'./python/cache/{year}-{day}.txt', 'r') as f:
             return f.read()
     else:
-        with open(f'./cache/{year}-{day}.txt', 'w') as f:
+        with open(f'./python/cache/{year}-{day}.txt', 'w') as f:
             aoc_input = get_input_http(year, day)
             f.write(aoc_input)
 

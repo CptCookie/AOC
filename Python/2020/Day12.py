@@ -1,7 +1,5 @@
 import requests
 from const import token 
-from itertools import chain, combinations
-from copy import deepcopy
 
 def get_aoc_input():
     r = requests.get("https://adventofcode.com/2020/day/12/input", cookies={"session": token})

@@ -122,4 +122,3 @@ venv.bak/
 
 # AOC specific
 config.py
-/cache

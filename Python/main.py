@@ -30,7 +30,7 @@ if __name__ == "__main__":
     try: 
         solution = importlib.import_module(f'{args.year}.Day{args.day}')
         solution.solve(puzzle_input)
-    except (ModuleNotFoundError, AttributeError):
-        print('No Solution for the year and day.')
+    except (ModuleNotFoundError) as e:
+        print(f'No Solution for the year and day. {e}')
     
     

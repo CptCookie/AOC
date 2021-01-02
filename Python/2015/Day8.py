@@ -1,5 +1,5 @@
 import re 
-regex = re.compile(r'\\x[0-9a-f]{2}')
+reghex = re.compile(r'\\x[0-9a-f]{2}')
 
 def count_code(line:str):
     return len(line)
@@ -7,7 +7,7 @@ def count_code(line:str):
 def count_char(line:str):
     line = line.replace(r'\\', '1')
     line = line.replace(r'\"', '2')
-    for n in regex.findall(line):
+    for n in reghex.findall(line):
         line = line.replace(n, '0')
     return len(f'{line[1:-1]}')
 
@@ -49,4 +49,4 @@ def solve(puzzle_input):
     sum_char = sum([count_char(n) for n in puzzle_input])
     print(f'solution 1: {sum_code - sum_char}')
     sum_reencode = sum([count_reencode(n) for n in puzzle_input])
-    print(f'solution 1: {sum_reencode - sum_code}')
+    print(f'solution 2: {sum_reencode - sum_code}')

@@ -32,5 +32,7 @@ if __name__ == "__main__":
         solution.solve(puzzle_input)
     except (ModuleNotFoundError) as e:
         print(f'No Solution for the year and day. {e}')
+    except (SyntaxError) as e:
+        print(f'solution is not ready: {e}')
     
     

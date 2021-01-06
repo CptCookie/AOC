@@ -23,6 +23,7 @@ def get_input(year, day):
         with open(f'./python/cache/{year}-{day}.txt', 'w') as f:
             aoc_input = get_input_http(year, day)
             f.write(aoc_input)
+        return aoc_input
 
 if __name__ == "__main__":
     args = parser.parse_args()

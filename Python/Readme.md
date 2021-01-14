@@ -8,7 +8,7 @@ Not all Solutions are converted yet.
 
 main.py contains a small CLI 
 
-``-y``: Gives the year to the script
+``-y``/``--year``: Gives the year to the script
 
-``-d``: Gives the day to the script
+``-d``/``-day``: Gives the day to the script
 

@@ -1,4 +1,4 @@
-from solution import is_valid, increment
+from .solution import is_valid, increment
 
 
 def test_is_valid():

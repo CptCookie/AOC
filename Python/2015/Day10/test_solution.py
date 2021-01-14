@@ -1,4 +1,4 @@
-from solution import get_sequences, newValue, look_and_say
+from .solution import get_sequences, newValue, look_and_say
 
 
 def test_sequencing():

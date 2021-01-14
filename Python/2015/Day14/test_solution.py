@@ -1,4 +1,4 @@
-from solution import positoning_after, score_after
+from .solution import positoning_after, score_after
 
 
 def test_pos_after():

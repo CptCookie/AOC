@@ -1,4 +1,4 @@
-from solution import map_moves, get_unique
+from .solution import map_moves, get_unique
 
 
 def test_map_moves():

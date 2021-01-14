@@ -1,4 +1,4 @@
-from solution import all_route_len
+from .solution import all_route_len
 
 
 def test_route():

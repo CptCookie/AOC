@@ -1,4 +1,4 @@
-from solution import count_code, count_char, count_reencode
+from .solution import count_code, count_char, count_reencode
 
 
 def test_count_code():

@@ -1,4 +1,4 @@
-from solution import Lights, parse_line, OFF, ON, TOOGLE
+from .solution import Lights, parse_line, OFF, ON, TOOGLE
 
 
 def test_turning_lights():

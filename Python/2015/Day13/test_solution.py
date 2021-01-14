@@ -1,4 +1,4 @@
-from solution import unique_guests, parse_relations, calculate_happienes
+from .solution import unique_guests, parse_relations, calculate_happienes
 
 
 def test_unique():

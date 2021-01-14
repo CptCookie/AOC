@@ -1,4 +1,4 @@
-from solution import has_two_apart, has_double, is_naughty_new, is_naughty_old
+from .solution import has_two_apart, has_double, is_naughty_new, is_naughty_old
 
 
 def test_has_double():

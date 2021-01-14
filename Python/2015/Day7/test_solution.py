@@ -1,4 +1,4 @@
-from solution import Programm
+from .solution import Programm
 
 
 def test_execute():

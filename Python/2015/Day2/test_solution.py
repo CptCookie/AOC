@@ -1,4 +1,4 @@
-from solution import paper_needed, ribbon_needed
+from .solution import paper_needed, ribbon_needed
 
 
 def test_wrapping_paper():

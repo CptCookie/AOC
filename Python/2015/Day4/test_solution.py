@@ -1,4 +1,4 @@
-from solution import find_hash
+from .solution import find_hash
 
 
 def test_hash():

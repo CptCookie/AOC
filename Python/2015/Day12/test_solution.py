@@ -1,4 +1,4 @@
-from solution import find_without_red
+from .solution import find_without_red
 
 
 def test_red():

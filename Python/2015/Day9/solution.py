@@ -1,8 +1,9 @@
 import itertools
 
+
 def route_len(route, map_routes):
     distance = 0
-    
+
     for n, stop in enumerate(route[1:]):
         for maped in map_routes:
             if maped[0] == stop and maped[1] == route[n]:
@@ -13,16 +14,23 @@ def route_len(route, map_routes):
                 break
     return distance
 
+
 def all_route_len(routes: [[str]]) -> int:
     unique_locations = [n[0:2] for n in routes]
     unique_locations = set([n for m in unique_locations for n in m])
-    return [route_len(r, routes) for r in itertools.permutations(unique_locations, len(unique_locations))]
+    return [
+        route_len(r, routes)
+        for r in itertools.permutations(unique_locations, len(unique_locations))
+    ]
 
 
 def solve(puzzle_input):
-    puzzle_input = [n.replace(' to ', ' ').replace(' = ', ' ').split(' ') 
-                    for n in puzzle_input.split('\n') if n != '']
-    print('solving')
+    puzzle_input = [
+        n.replace(" to ", " ").replace(" = ", " ").split(" ")
+        for n in puzzle_input.split("\n")
+        if n != ""
+    ]
+    print("solving")
     all_routes = all_route_len(puzzle_input)
-    print(f'solution 1: {min(all_routes)}')
-    print(f'solution 2: {max(all_routes)}')
+    print(f"solution 1: {min(all_routes)}")
+    print(f"solution 2: {max(all_routes)}")

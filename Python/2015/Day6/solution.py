@@ -1,25 +1,26 @@
 import re
 
-pos_regex = re.compile(r'\d{1,},\d{1,}')
+pos_regex = re.compile(r"\d{1,},\d{1,}")
 
-TOOGLE = 'toggle'
-ON = 'turn on'
-OFF = 'turn off'
+TOOGLE = "toggle"
+ON = "turn on"
+OFF = "turn off"
+
 
 class Lights:
     def __init__(self, bin=True):
         self.light = [0] * 1000 * 1000
         self.bin = bin
-    
+
     @property
     def brightness(self):
         return sum(self.light)
 
-    def actuate(self, start:[int, int], end:[int, int], action:str):
-        for x in range(start[0], end[0]+1):
-            for y in range(start[1], end[1]+1):
+    def actuate(self, start: [int, int], end: [int, int], action: str):
+        for x in range(start[0], end[0] + 1):
+            for y in range(start[1], end[1] + 1):
                 if action == TOOGLE and self.bin:
-                    self.light[x + y * 1000] = abs(self.light[x + y * 1000] -1)
+                    self.light[x + y * 1000] = abs(self.light[x + y * 1000] - 1)
                 elif action == ON and self.bin:
                     self.light[x + y * 1000] = 1
                 elif action == OFF and self.bin:
@@ -30,25 +31,26 @@ class Lights:
                     self.light[x + y * 1000] += 1
                 elif action == OFF and not self.bin:
                     self.light[x + y * 1000] -= 1 if self.light[x + y * 1000] > 0 else 0
-                
+
 
 def parse_line(line):
     pos = []
     for n in pos_regex.findall(line):
-        x, y = n.split(',')
+        x, y = n.split(",")
         pos.append([int(x), int(y)])
-    
+
     for n in [TOOGLE, OFF, ON]:
         if n in line:
             return pos + [n]
 
+
 def solve(puzzle_input):
     deko = Lights()
-    for n, line in enumerate([n for n in puzzle_input.split('\n') if n != '']):
+    for n, line in enumerate([n for n in puzzle_input.split("\n") if n != ""]):
         deko.actuate(*parse_line(line))
-    print(f'solution 1: {deko.brightness}')
+    print(f"solution 1: {deko.brightness}")
 
     deko = Lights(bin=False)
-    for n, line in enumerate([n for n in puzzle_input.split('\n') if n != '']):
+    for n, line in enumerate([n for n in puzzle_input.split("\n") if n != ""]):
         deko.actuate(*parse_line(line))
-    print(f'solution 2: {deko.brightness}')
+    print(f"solution 2: {deko.brightness}")

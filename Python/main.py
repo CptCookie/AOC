@@ -2,6 +2,7 @@ import requests
 import argparse
 import os
 import importlib
+import pytest
 from config import token
 
 parser = argparse.ArgumentParser()
@@ -29,8 +30,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
     puzzle_input = get_input(args.year, args.day)
     try: 
-        solution = importlib.import_module(f'{args.year}.Day{args.day}')
+        pytest.main(['-x', '-q', '--disable-warnings', f'python/{args.year}/Day{args.day}'])
+        solution = importlib.import_module(f'{args.year}.Day{args.day}.solution')
         solution.solve(puzzle_input)
+        print('\n')
     except (ModuleNotFoundError) as e:
         print(f'No Solution for the year and day. {e}')
     except (SyntaxError) as e:

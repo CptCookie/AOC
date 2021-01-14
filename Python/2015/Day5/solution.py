@@ -22,38 +22,8 @@ def has_two_apart(text):
 def is_naughty_new(text):
     return not has_double(text) or not has_two_apart(text)
 
-def test_has_double():
-    assert has_double('xxyxx') == True
-    assert has_double('abxxxjf') == False
-    assert has_double('xx') == False
-
-def test_two_apart():
-    assert has_two_apart('xyx') == True
-    assert has_two_apart('qjhvhtzxzqqjkmpb') == True
-    assert has_two_apart('uurcxstgmygtbstg') == False
-
-def test_naughty_old():
-    assert is_naughty_old('ugknbfddgicrmopn') == False
-    assert is_naughty_old('jchzalrnumimnmhp') == True
-    assert is_naughty_old('haegwjzuvuyypxyu') == True
-    assert is_naughty_old('dvszwmarrgswjxmb') == True
-
-def test_naughty_new():
-    assert is_naughty_new('qjhvhtzxzqqjkmpb') == False
-    assert is_naughty_new('xxyxx') == False
-    assert is_naughty_new('uurcxstgmygtbstg') == True
-    assert is_naughty_new('ieodomkazucvgmuy') == True
-
 def solve(puzzle_input):
     puzzle_input = [n for n in puzzle_input.split('\n') if n != '']
-    
-    print('testing')
-    test_naughty_old()
-    test_has_double()
-    test_two_apart()
-    test_naughty_new()
-
-    print('solving')
     print(f'solution 1: {len([n for n in puzzle_input if not is_naughty_old(n)])}')
     print(f'solution 2: {len([n for n in puzzle_input if not is_naughty_new(n)])}')
 

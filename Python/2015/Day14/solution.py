@@ -18,29 +18,11 @@ def score_after(reindeer, time):
                 scores[n] += 1
     return scores
 
-def test_pos_after():
-    reindeer = [
-        ['A', 14, 10, 127],
-        ['B', 16, 11, 162]
-    ]
-    assert positoning_after(reindeer, 1000) == {'A': 1120, 'B': 1056}
-
-def test_score_after():
-    reindeer = [
-        ['A', 14, 10, 127],
-        ['B', 16, 11, 162]
-    ]
-    assert score_after(reindeer, 1000) == {'B': 689, 'A': 312}
-
 def solve(puzzle_input):
     puzzle_input = [n.split(' ') for n in puzzle_input.split('\n') if n != '']
     puzzle_input = [[n[0], int(n[3]), int(n[6]), int(n[-2])] for n in puzzle_input]
-    
-    print('testing ', end='')
-    test_pos_after()
-    test_score_after()
-    print('done')
 
-    print('solving')
-    print(f'solution 1: {positoning_after(puzzle_input, 2503)}')
-    print(f'solution 2: {score_after(puzzle_input, 2503)}')
+    pos = positoning_after(puzzle_input, 2503)
+    print(f'solution 1: {pos[max(pos, key=lambda x: pos[x])]}')
+    scores=score_after(puzzle_input, 2503)
+    print(f'solution 2: {scores[max(scores, key=lambda x: scores[x])]}')

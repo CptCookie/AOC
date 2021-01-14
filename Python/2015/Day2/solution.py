@@ -24,19 +24,6 @@ def total_material_needed(puzzle_input, material_func):
 def ribbon_needed(box: [int]):
     return sum(sorted(box)[:-1])*2 + math.prod(box)
 
-def test_wrapping_paper():
-    assert paper_needed([2,3,4]) == 58
-    assert paper_needed([1,1,10]) == 43
-
-def test_ribbon():
-    assert ribbon_needed([2,3,4]) == 34
-    assert ribbon_needed([1,1,10]) == 14
-
 def solve(puzzle_input):
-    print('testing')
-    test_wrapping_paper()
-    test_ribbon()
-
-    print('solving')
-    print(total_material_needed(puzzle_input, paper_needed))
-    print(total_material_needed(puzzle_input, ribbon_needed))
+    print(f"solution 1: {total_material_needed(puzzle_input, paper_needed)}")
+    print(f"solution 2: {total_material_needed(puzzle_input, ribbon_needed)}")

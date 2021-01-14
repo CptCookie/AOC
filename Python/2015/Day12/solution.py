@@ -22,14 +22,7 @@ def sum_red(obj):
         return obj
     return 0
 
-def test_red():
-    assert find_without_red('[1,{"c":"red","b":2},3]') == 4
-
 def solve(puzzle_input):
     puzzle_input = puzzle_input
-    print('testing ', end='')
-
-    print('done')
-    print('solving')
     print(f'solution 1: {sum(find_numbers(puzzle_input))}')
     print(f'solution 2: {sum_red(json.loads(puzzle_input))}')

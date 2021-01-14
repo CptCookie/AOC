@@ -39,33 +39,8 @@ def calculate_happienes(seat_order, relations):
             happienes += relations[seat_order[n]][guest]
     return happienes
 
-def test_unique():
-    guests = unique_guests([
-        ["Alice", "would", "lose", "2", "happiness", "units", "by", "sitting", "next", "to", "Bob"],
-        ["Bob", "would", "gain", "93", "happiness", "units", "by", "sitting", "next", "to", "Alice"]
-    ])
-    assert guests == {"Alice", "Bob"}
-
-def test_parse_relation():
-    rel = parse_relations([
-        ["Alice", "would", "lose", "2", "happiness", "units", "by", "sitting", "next", "to", "Bob"],
-        ["Bob", "would", "gain", "93", "happiness", "units", "by", "sitting", "next", "to", "Alice"]
-    ])
-    assert rel == {'Alice': {'Bob': -2}, "Bob": {"Alice": 93}}
-
-def test_calc_happy():
-    rel = {'A': {'B': -2, "C": 5}, "B": {"A": 93, "C": 1}, "C": {"A": 1, "B": -35}}
-    seat_order = ["A", "B", "C"]
-    assert calculate_happienes(seat_order, rel) == 63
-
 def solve(puzzle_input):
     puzzle_input = [n.split(' ') for n in puzzle_input.replace('.', '').split('\n') if n != '']
-    print('testing ', end='')
-    test_unique()
-    test_parse_relation()
-    test_calc_happy()
-    print('done')
 
-    print('solving')
     print(f'solution 1: {max(calc_all_seatorders(puzzle_input), key=lambda x: x["hapiness"])}')
     print(f'solution 2: {max(calc_all_seatorders(puzzle_input, True), key=lambda x: x["hapiness"])}')

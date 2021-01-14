@@ -16,16 +16,7 @@ def valid_hash(hash, leeding_zeros):
     return True
 
 
-def test_hash():
-    assert find_hash('abcdef', 5) == 609043
-    assert find_hash('pqrstuv', 5) == 1048970
-
 def solve(puzzle_input):
     puzzle_input = puzzle_input.replace('\n', '')
-    print('testing')
-    test_hash()
-
-    print('solving')
-
-    print(f'solution 1 for {puzzle_input}: {find_hash(puzzle_input, 5)}')
-    print(f'solution 2 for {puzzle_input}: {find_hash(puzzle_input, 6)}')
+    print(f'solution 1: {find_hash(puzzle_input, 5)}')
+    print(f'solution 2: {find_hash(puzzle_input, 6)}')

@@ -4,3 +4,11 @@ This are my Python solutions for Advent of Code. The solutionse are called via a
 The input is either fetched from the website and stored or is read from a file in the cache folder. 
 
 Not all Solutions are converted yet.
+
+
+main.py contains a small CLI 
+
+``-y``: Gives the year to the script
+
+``-d``: Gives the day to the script
+

@@ -20,7 +20,7 @@ def get_state_score(ingr_amount, stat, ingr_stats):
 
 
 def get_cookie_score(
-    ingr_amount: {str: int}, ingr_stats: {str: {str: int}}, weight_watch=False
+    ingr_amount: {str: int}, ingr_stats: {str: {str: int}}, calorie_count=None
 ):
     score = 1
     for stat in ingr_stats[list(ingr_stats.keys())[0]]:
@@ -28,19 +28,19 @@ def get_cookie_score(
             sub_score = get_state_score(ingr_amount, stat, ingr_stats)
             score *= sub_score if sub_score > 0 else 0
 
-    if weight_watch:
+    if calorie_count is not None:
         calories = get_state_score(ingr_amount, "calories", ingr_stats)
-        return score if calories == 500 else 0
+        return score if calories == calorie_count else 0
     else:
         return score
 
 
-def max_score_cookie(ingr_stats, weight_watch=False):
+def max_score_cookie(ingr_stats, calorie_count=None):
     recipies = itertools.combinations_with_replacement(list(ingr_stats.keys()), r=100)
     max_score = 0
     for r in recipies:
         cookie = {i: r.count(i) for i in ingr_stats}
-        score = get_cookie_score(cookie, ingr_stats, weight_watch)
+        score = get_cookie_score(cookie, ingr_stats, calorie_count)
         max_score = score if score > max_score else max_score
     return max_score
 
@@ -53,4 +53,4 @@ def solve(puzzle_input):
     ingr_stats = parse_ingr_stats(puzzle_input)
 
     print(f"solution 1: {max_score_cookie(ingr_stats)}")
-    print(f"solution 2: {max_score_cookie(ingr_stats, True)}")
+    print(f"solution 2: {max_score_cookie(ingr_stats, 500)}")

@@ -24,4 +24,4 @@ def test_max_score_weight_watch():
         "B": {"c": -1, "d": -2, "f": 6, "t": 3, "calories": 8},
         "C": {"c": 2, "d": 3, "f": -2, "t": -1, "calories": 3},
     }
-    assert max_score_cookie(ingr, True) == 57600000
+    assert max_score_cookie(ingr, 500) == 57600000

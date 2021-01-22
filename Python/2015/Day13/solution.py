@@ -27,7 +27,7 @@ def calc_all_seatorders(relations, seat_self=False):
         tables.append(
             {
                 "order": seat_order,
-                "hapiness": calculate_happienes(seat_order, parse_relations(relations)),
+                "happiness": calculate_happienes(seat_order, parse_relations(relations)),
             }
         )
     return tables
@@ -47,11 +47,11 @@ def solution_1(puzzle_input):
     puzzle_input = [
         n.split(" ") for n in puzzle_input.replace(".", "").split("\n") if n != ""
     ]
-    return max(calc_all_seatorders(puzzle_input), key=lambda x: x["hapiness"])
+    return max(calc_all_seatorders(puzzle_input), key=lambda x: x["happiness"])["happiness"]
 
 
 def solution_2(puzzle_input):
     puzzle_input = [
         n.split(" ") for n in puzzle_input.replace(".", "").split("\n") if n != ""
     ]
-    return max(calc_all_seatorders(puzzle_input, True), key=lambda x: x["hapiness"])
+    return max(calc_all_seatorders(puzzle_input, True), key=lambda x: x["happiness"])["happiness"]

@@ -23,9 +23,11 @@ def get_unique(lst: []):
     return [x for n, x in enumerate(lst) if lst.index(x) == n]
 
 
-def solve(puzzle_input):
-    print(f"solution 1: {len(get_unique(map_moves(puzzle_input)))}")
+def solution_1(puzzle_input):
+    return len(get_unique(map_moves(puzzle_input)))
 
+
+def solution_2(puzzle_input):
     santa = puzzle_input[::2]
     robo = puzzle_input[1::2]
-    print(f"solution 2: {len(get_unique(map_moves(santa) + map_moves(robo)))}")
+    return len(get_unique(map_moves(santa) + map_moves(robo)))

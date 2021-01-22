@@ -48,7 +48,7 @@ def get_input(year, day):
 def run_solution(year, day):
     puzzle_input = get_input(year, day)
     try:
-        pytest.main(["-x", "-q", "--disable-warnings", f"python/{year}/Day{day}"])
+        pytest.main(["-x", "-q", f"python/{year}/Day{day}"])
         solution = importlib.import_module(f"{year}.Day{day}.solution")
 
         timer = perf_counter()

@@ -11,12 +11,14 @@ def get_all_valid_combination(container, sum_amount):
     return valid
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
     puzzle_input = [int(n) for n in puzzle_input.split("\n") if n != ""]
     valid_container = get_all_valid_combination(puzzle_input, 150)
-    print(f"solution 1: {len(valid_container)}")
+    return len(valid_container)
 
+
+def solution_2(puzzle_input):
+    puzzle_input = [int(n) for n in puzzle_input.split("\n") if n != ""]
+    valid_container = get_all_valid_combination(puzzle_input, 150)
     min_number_container = min([len(n) for n in valid_container])
-    print(
-        f"solution 2: {len([n for n in valid_container if len(n) == min_number_container])}"
-    )
+    return len([n for n in valid_container if len(n) == min_number_container])

@@ -20,11 +20,15 @@ def score_after(reindeer, time):
     return scores
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
     puzzle_input = [n.split(" ") for n in puzzle_input.split("\n") if n != ""]
     puzzle_input = [[n[0], int(n[3]), int(n[6]), int(n[-2])] for n in puzzle_input]
-
     pos = positoning_after(puzzle_input, 2503)
-    print(f"solution 1: {pos[max(pos, key=lambda x: pos[x])]}")
+    return pos[max(pos, key=lambda x: pos[x])]
+
+
+def solution_2(puzzle_input):
+    puzzle_input = [n.split(" ") for n in puzzle_input.split("\n") if n != ""]
+    puzzle_input = [[n[0], int(n[3]), int(n[6]), int(n[-2])] for n in puzzle_input]
     scores = score_after(puzzle_input, 2503)
-    print(f"solution 2: {scores[max(scores, key=lambda x: scores[x])]}")
+    return scores[max(scores, key=lambda x: scores[x])]

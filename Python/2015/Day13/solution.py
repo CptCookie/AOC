@@ -43,14 +43,15 @@ def calculate_happienes(seat_order, relations):
     return happienes
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
     puzzle_input = [
         n.split(" ") for n in puzzle_input.replace(".", "").split("\n") if n != ""
     ]
+    return max(calc_all_seatorders(puzzle_input), key=lambda x: x["hapiness"])
 
-    print(
-        f'solution 1: {max(calc_all_seatorders(puzzle_input), key=lambda x: x["hapiness"])}'
-    )
-    print(
-        f'solution 2: {max(calc_all_seatorders(puzzle_input, True), key=lambda x: x["hapiness"])}'
-    )
+
+def solution_2(puzzle_input):
+    puzzle_input = [
+        n.split(" ") for n in puzzle_input.replace(".", "").split("\n") if n != ""
+    ]
+    return max(calc_all_seatorders(puzzle_input, True), key=lambda x: x["hapiness"])

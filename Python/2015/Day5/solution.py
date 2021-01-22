@@ -27,7 +27,11 @@ def is_naughty_new(text):
     return not has_double(text) or not has_two_apart(text)
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
     puzzle_input = [n for n in puzzle_input.split("\n") if n != ""]
-    print(f"solution 1: {len([n for n in puzzle_input if not is_naughty_old(n)])}")
-    print(f"solution 2: {len([n for n in puzzle_input if not is_naughty_new(n)])}")
+    return len([n for n in puzzle_input if not is_naughty_old(n)])
+
+
+def solution_2(puzzle_input):
+    puzzle_input = [n for n in puzzle_input.split("\n") if n != ""]
+    return len([n for n in puzzle_input if not is_naughty_new(n)])

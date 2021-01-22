@@ -52,10 +52,17 @@ def run_solution(year, day):
         solution = importlib.import_module(f"{year}.Day{day}.solution")
 
         timer = perf_counter()
-        solution.solve(puzzle_input)
+        result_1 = solution.solution_1(puzzle_input)
         run_time = round((perf_counter() - timer) * 1000, 2)
+        print(f"{year}-{day}\tSolution 1: {result_1}")
+        print(f"took: {run_time}ms")
 
-        print(f"time to run: {run_time}ms")
+        timer = perf_counter()
+        result_2 = solution.solution_2(puzzle_input)
+        run_time = round((perf_counter() - timer) * 1000, 2)
+        print(f"{year}-{day}\tSolution 2: {result_2}")
+        print(f"took: {run_time}ms")
+
     except (ModuleNotFoundError) as e:
         print(f"No Solution for the day found. {e}")
     except (SyntaxError, AttributeError) as e:

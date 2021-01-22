@@ -26,7 +26,11 @@ def sum_red(obj):
     return 0
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
     puzzle_input = puzzle_input
-    print(f"solution 1: {sum(find_numbers(puzzle_input))}")
-    print(f"solution 2: {sum_red(json.loads(puzzle_input))}")
+    return sum(find_numbers(puzzle_input))
+
+
+def solution_2(puzzle_input):
+    puzzle_input = puzzle_input
+    return sum_red(json.loads(puzzle_input))

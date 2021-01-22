@@ -64,7 +64,11 @@ def match(all_aunts, facts, retro=None):
             return n + 1
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
     aunts = parse_aunts(puzzle_input)
-    print(f"solution 1: {match(aunts, MFCSAM)}")
-    print(f"solution 2: {match(aunts, MFCSAM, RETRO)}")
+    return match(aunts, MFCSAM)
+
+
+def solution_2(puzzle_input):
+    aunts = parse_aunts(puzzle_input)
+    return match(aunts, MFCSAM, RETRO)

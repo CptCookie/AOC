@@ -23,7 +23,9 @@ def get_lowest_house_limited(presents):
             return n
 
 
-def solve(puzzle_input):
-    print(puzzle_input)
-    print(f"solution 1: {get_lowest_house(int(puzzle_input))}")
-    print(f"solution 2: {get_lowest_house_limited(int(puzzle_input))}")
+def solution_1(puzzle_input):
+    return get_lowest_house(int(puzzle_input))
+
+
+def solution_2(puzzle_input):
+    return get_lowest_house_limited(int(puzzle_input))

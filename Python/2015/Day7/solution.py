@@ -81,11 +81,16 @@ class Programm:
                 self.instr = buffer_instr
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
+    prog = Programm([n for n in puzzle_input.split("\n") if n != ""])
+    prog.run()
+    return prog.mem["a"]
+
+
+def solution_2(puzzle_input):
     prog = Programm([n for n in puzzle_input.split("\n") if n != ""])
     prog.run()
     a = prog.mem["a"]
-    print(f"solution 1: {a}")
 
     instr = [n for n in puzzle_input.split("\n") if n != ""]
     for n, line in enumerate(instr):
@@ -94,5 +99,4 @@ def solve(puzzle_input):
 
     prog = Programm(instr)
     prog.run()
-    a = prog.mem["a"]
-    print(f"solution 2: {a}")
+    return prog.mem["a"]

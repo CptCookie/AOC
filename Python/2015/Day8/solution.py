@@ -21,11 +21,15 @@ def count_reencode(line: str):
     return len(line) + qoutes + slashes + 2
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
     puzzle_input = [n for n in puzzle_input.split("\n") if n != ""]
-
     sum_code = sum([count_code(n) for n in puzzle_input])
     sum_char = sum([count_char(n) for n in puzzle_input])
-    print(f"solution 1: {sum_code - sum_char}")
+    return sum_code - sum_char
+
+
+def solution_2(puzzle_input):
+    puzzle_input = [n for n in puzzle_input.split("\n") if n != ""]
+    sum_code = sum([count_code(n) for n in puzzle_input])
     sum_reencode = sum([count_reencode(n) for n in puzzle_input])
-    print(f"solution 2: {sum_reencode - sum_code}")
+    return sum_reencode - sum_code

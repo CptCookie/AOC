@@ -44,13 +44,15 @@ def parse_line(line):
             return pos + [n]
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
     deko = Lights()
     for n, line in enumerate([n for n in puzzle_input.split("\n") if n != ""]):
         deko.actuate(*parse_line(line))
-    print(f"solution 1: {deko.brightness}")
+    return deko.brightness
 
+
+def solution_2(puzzle_input):
     deko = Lights(bin=False)
     for n, line in enumerate([n for n in puzzle_input.split("\n") if n != ""]):
         deko.actuate(*parse_line(line))
-    print(f"solution 2: {deko.brightness}")
+    return deko.brightness

@@ -18,7 +18,11 @@ def valid_hash(hash, leeding_zeros):
     return True
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
     puzzle_input = puzzle_input.replace("\n", "")
-    print(f"solution 1: {find_hash(puzzle_input, 5)}")
-    print(f"solution 2: {find_hash(puzzle_input, 6)}")
+    return find_hash(puzzle_input, 5)
+
+
+def solution_2(puzzle_input):
+    puzzle_input = puzzle_input.replace("\n", "")
+    return find_hash(puzzle_input, 6)

@@ -66,6 +66,9 @@ def expensive_loss():
     return max(loosing_costs)
 
 
-def solve(puzzle_input):
-    print(f"solution 1: {cheapest_win()}")
-    print(f"solution 2: {expensive_loss()}")
+def solution_1(*args):
+    return cheapest_win()
+
+
+def solution_2(*args):
+    return expensive_loss()

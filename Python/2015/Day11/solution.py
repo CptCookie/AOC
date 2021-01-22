@@ -75,8 +75,12 @@ def next_password(old):
             return password
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
+    puzzle_input = puzzle_input.split("\n")[0]
+    return next_password(puzzle_input)
+
+
+def solution_2(puzzle_input):
     puzzle_input = puzzle_input.split("\n")[0]
     new_password = next_password(puzzle_input)
-    print(f"solution 1: {new_password}")
-    print(f"solution 2: {next_password(new_password)}")
+    return next_password(new_password)

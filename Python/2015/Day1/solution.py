@@ -11,6 +11,9 @@ def enter_basement(puzzle_input):
             return n + 1
 
 
-def solve(puzzle_input):
-    print(sum_up(puzzle_input))
-    print(enter_basement(puzzle_input))
+def solution_1(puzzle_input):
+    return sum_up(puzzle_input)
+
+
+def solution_2(puzzle_input):
+    return enter_basement(puzzle_input)

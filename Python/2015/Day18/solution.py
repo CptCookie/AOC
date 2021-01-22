@@ -72,13 +72,15 @@ class Lights:
                 self.fix_corners()
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
     light_wall = Lights(100)
     light_wall.parse_instr(puzzle_input)
     light_wall.animate(100)
-    print(f"solution 1: {sum(light_wall.light)}")
+    return sum(light_wall.light)
 
+
+def solution_2(puzzle_input):
     light_wall = Lights(100, stuck_corners=True)
     light_wall.parse_instr(puzzle_input)
     light_wall.animate(100)
-    print(f"solution 2: {sum(light_wall.light)}")
+    return sum(light_wall.light)

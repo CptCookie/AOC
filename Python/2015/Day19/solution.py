@@ -50,9 +50,13 @@ def regex_replace(match, string: str, replace: str) -> str:
     return f"{string[: match.start()]}{replace}{string[match.end() :]}"
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
     puzzle_input = [n for n in puzzle_input.split("\n") if n != ""]
     substitutions = parse_substitutions(puzzle_input[:-1])
     products = get_all_products(puzzle_input[-1], substitutions)
-    print(f"solution 1: {len(get_unique(products))}")
-    print(f"solution 2: {get_number_of_steps_to(puzzle_input[-1])}")
+    return len(get_unique(products))
+
+
+def solution_2(puzzle_input):
+    puzzle_input = [n for n in puzzle_input.split("\n") if n != ""]
+    return get_number_of_steps_to(puzzle_input[-1])

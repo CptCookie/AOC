@@ -27,14 +27,19 @@ def look_and_say(init_value: int):
         yield value
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
     puzzle_input = int(puzzle_input.split("\n")[0])
-
-    print("solving")
     for n, elem in enumerate(look_and_say(puzzle_input)):
         if n == 39:
-            print(f"solution 1: {len(str(elem))}")
+            return len(str(elem))
+        if n > 39:
+            break
+
+
+def solution_2(puzzle_input):
+    puzzle_input = int(puzzle_input.split("\n")[0])
+    for n, elem in enumerate(look_and_say(puzzle_input)):
         if n == 49:
-            print(f"solution 2: {len(str(elem))}")
+            return len(str(elem))
         if n > 49:
             break

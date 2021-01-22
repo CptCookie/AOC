@@ -45,12 +45,19 @@ def max_score_cookie(ingr_stats, calorie_count=None):
     return max_score
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
     puzzle_input = [n for n in puzzle_input.split("\n") if n != ""]
     puzzle_input = [
         n.replace(":", "").replace(",", "").split(" ") for n in puzzle_input
     ]
     ingr_stats = parse_ingr_stats(puzzle_input)
+    return max_score_cookie(ingr_stats)
 
-    print(f"solution 1: {max_score_cookie(ingr_stats)}")
-    print(f"solution 2: {max_score_cookie(ingr_stats, 500)}")
+
+def solution_2(puzzle_input):
+    puzzle_input = [n for n in puzzle_input.split("\n") if n != ""]
+    puzzle_input = [
+        n.replace(":", "").replace(",", "").split(" ") for n in puzzle_input
+    ]
+    ingr_stats = parse_ingr_stats(puzzle_input)
+    return max_score_cookie(ingr_stats, 500)

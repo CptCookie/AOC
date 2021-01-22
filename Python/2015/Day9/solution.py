@@ -15,7 +15,7 @@ def route_len(route, map_routes):
     return distance
 
 
-def all_route_len(routes: [[str]]) -> int:
+def all_route_len(routes):
     unique_locations = [n[0:2] for n in routes]
     unique_locations = set([n for m in unique_locations for n in m])
     return [
@@ -24,13 +24,21 @@ def all_route_len(routes: [[str]]) -> int:
     ]
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
     puzzle_input = [
         n.replace(" to ", " ").replace(" = ", " ").split(" ")
         for n in puzzle_input.split("\n")
         if n != ""
     ]
-    print("solving")
     all_routes = all_route_len(puzzle_input)
     print(f"solution 1: {min(all_routes)}")
+
+
+def solution_2(puzzle_input):
+    puzzle_input = [
+        n.replace(" to ", " ").replace(" = ", " ").split(" ")
+        for n in puzzle_input.split("\n")
+        if n != ""
+    ]
+    all_routes = all_route_len(puzzle_input)
     print(f"solution 2: {max(all_routes)}")

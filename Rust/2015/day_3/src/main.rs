@@ -5,7 +5,7 @@ type Postion = Vec<i32>;
 fn main() {
     let puzzle_input = fs::read_to_string("2015-3.txt").unwrap();
     println!("Solution 1: {}", solution_1(&puzzle_input));
-    println!("Solution 1: {}", solution_2(&puzzle_input));
+    println!("Solution 2: {}", solution_2(&puzzle_input));
 }
 
 fn solution_1(puzzle_input: &String) -> usize {

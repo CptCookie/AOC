@@ -1,33 +1,48 @@
+from collections import namedtuple
+from typing import Iterable
+
 UP = "^"
 DOWN = "v"
 LEFT = "<"
 RIGHT = ">"
 
+Position = namedtuple("Position", ["x", "y"])
 
-def map_moves(puzzel_input):
-    pos = [[0, 0]]
+
+def get_all_pos(puzzel_input: str) -> Iterable[Position]:
+    all_pos = [Position(0, 0)]
+
     for direction in puzzel_input:
-        current = pos[-1]
+        current_pos = all_pos[-1]
+
         if direction is UP:
-            pos.append([current[0], current[1] + 1])
+            all_pos.append([current_pos.x, current_pos.y + 1])
+
         elif direction is DOWN:
-            pos.append([current[0], current[1] - 1])
+            all_pos.append([current_pos.x, current_pos.y - 1])
+
         elif direction is RIGHT:
-            pos.append([current[0] + 1, current[1]])
+            all_pos.append([current_pos.x + 1, current_pos.y])
+
         elif direction is LEFT:
-            pos.append([current[0] - 1, current[1]])
-    return pos
+            all_pos.append([current_pos.x - 1, current_pos.y])
+
+    return all_pos
 
 
-def get_unique(lst: []):
-    return [x for n, x in enumerate(lst) if lst.index(x) == n]
+def get_unique(elements: Iterable) -> Iterable:
+    return [e for n, e in enumerate(elements) if elements.index(e) == n]
 
 
-def solution_1(puzzle_input):
-    return len(get_unique(map_moves(puzzle_input)))
+def solution_1(moves) -> int:
+    return len(get_unique(get_all_pos(moves)))
 
 
-def solution_2(puzzle_input):
-    santa = puzzle_input[::2]
-    robo = puzzle_input[1::2]
-    return len(get_unique(map_moves(santa) + map_moves(robo)))
+def solution_2(moves) -> int:
+    santa_moves = moves[::2]
+    santa_positions = get_all_pos(santa_moves)
+
+    robot_moves = moves[1::2]
+    robot_positions = get_all_pos(robot_moves)
+
+    return len(get_unique(santa_positions + robot_positions))

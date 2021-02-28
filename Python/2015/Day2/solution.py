@@ -28,15 +28,16 @@ def parse_puzzel_string(puzzle_string) -> List[Box]:
     return box_dimensions
 
 
-def total_material_needed(puzzle_string, material_function):
-    all_boxes = parse_puzzel_string(puzzle_string)
+def total_material_needed(all_boxes, material_function):
     material = [material_function(box) for box in all_boxes]
     return sum(material)
 
 
 def solution_1(puzzle_string):
-    return total_material_needed(puzzle_string, Box.wrapping_needed)
+    all_boxes = parse_puzzel_string(puzzle_string)
+    return total_material_needed(all_boxes, Box.wrapping_needed)
 
 
 def solution_2(puzzle_string):
-    return total_material_needed(puzzle_string, Box.ribbon_needed)
+    all_boxes = parse_puzzel_string(puzzle_string)
+    return total_material_needed(all_boxes, Box.ribbon_needed)

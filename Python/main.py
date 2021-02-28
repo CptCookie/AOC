@@ -63,12 +63,12 @@ def solve_puzzle(year, day, run_test=False, measure_runtime=False):
     try:
         if run_test:
             pytest.main(["-x", "-q", f"python/{year}/Day{day}"])
+        else:
+            puzzle_solution = importlib.import_module(f"{year}.Day{day}.solution")
+            print(f"Solving Advent of Code {year} Day {day}:")
 
-        puzzle_solution = importlib.import_module(f"{year}.Day{day}.solution")
-        print(f"Solving Advent of Code {year} Day {day}:")
-
-        run_solution(puzzle_solution.solution_1, puzzle_string, measure_runtime)
-        run_solution(puzzle_solution.solution_2, puzzle_string, measure_runtime)
+            run_solution(puzzle_solution.solution_1, puzzle_string, measure_runtime)
+            run_solution(puzzle_solution.solution_2, puzzle_string, measure_runtime)
 
     except (ModuleNotFoundError) as e:
         print(f"No Solution for the day found. {e}")

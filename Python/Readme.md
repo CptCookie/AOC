@@ -13,4 +13,4 @@ main.py contains a small CLI
 
 `-t`/`--tests`: run the tests for the solution only
 
-`-r`/`-runtime`: prints also the runtime for the solution
+`-r`/`--runtime`: prints also the runtime for the solution

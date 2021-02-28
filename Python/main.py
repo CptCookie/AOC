@@ -1,4 +1,6 @@
 import requests
+from collections import namedtuple
+from typing import Callable
 import argparse
 import os
 import importlib
@@ -10,9 +12,23 @@ from config import token
 parser = argparse.ArgumentParser()
 parser.add_argument("--year", "-y", help="year", type=int, required=True)
 parser.add_argument("--day", "-d", help="day", type=int)
+parser.add_argument(
+    "--tests",
+    "-t",
+    help="Skip the tests",
+    action="store_true",
+    default=False,
+)
+parser.add_argument(
+    "--runtime",
+    "-r",
+    help="shows the runtime of the solution",
+    action="store_true",
+    default=False,
+)
 
 
-def get_http_input(year, day):
+def read_input_from_http(year, day):
     r = requests.get(
         f"https://adventofcode.com/{year}/day/{day}/input", cookies={"session": token}
     )
@@ -22,46 +38,37 @@ def get_http_input(year, day):
         raise requests.exceptions.ConnectionError("Token might be too old.")
 
 
-def read_cached_input(year, day):
+def read_input_from_file(year, day):
     with open(f"./python/cache/{year}-{day}.txt", "r") as f:
         return f.read()
 
 
-def write_cached_input(year, day, data):
+def write_input_to_file(year, day, data):
     with open(f"./python/cache/{year}-{day}.txt", "w") as f:
         f.write(data)
 
 
-def is_cached_input(year, day):
-    return f"{year}-{day}.txt" in os.listdir("./python/cache")
-
-
-def get_input(year, day):
-    if is_cached_input(year, day):
-        return read_cached_input(year, day)
-    else:
-        aoc_input = get_http_input(year, day)
-        write_cached_input(year, day, aoc_input)
-        return aoc_input
-
-
-def run_solution(year, day):
-    puzzle_input = get_input(year, day)
+def get_puzzel_input(year, day):
     try:
-        pytest.main(["-x", "-q", f"python/{year}/Day{day}"])
-        solution = importlib.import_module(f"{year}.Day{day}.solution")
+        return read_input_from_file(year, day)
+    except FileNotFoundError:
+        puzzle_input = read_input_from_http(year, day)
+        write_input_to_file(year, day, puzzle_input)
+        return puzzle_input
 
-        timer = perf_counter()
-        result_1 = solution.solution_1(puzzle_input)
-        run_time = round((perf_counter() - timer) * 1000, 2)
-        print(f"{year}-{day}\tSolution 1: {result_1}")
-        print(f"took: {run_time}ms")
 
-        timer = perf_counter()
-        result_2 = solution.solution_2(puzzle_input)
-        run_time = round((perf_counter() - timer) * 1000, 2)
-        print(f"{year}-{day}\tSolution 2: {result_2}")
-        print(f"took: {run_time}ms")
+def solve_puzzle(year, day, run_test=False, measure_runtime=False):
+    puzzle_string = get_puzzel_input(year, day)
+
+    try:
+        if run_test:
+            pytest.main(["-x", "-q", f"python/{year}/Day{day}"])
+
+        puzzle_solution = importlib.import_module(f"{year}.Day{day}.solution")
+        print(f"Solving Advent of Code {year} Day {day}:")
+
+        run_solution(puzzle_solution.solution_1, puzzle_string, measure_runtime)
+        run_solution(puzzle_solution.solution_2, puzzle_string, measure_runtime)
 
     except (ModuleNotFoundError) as e:
         print(f"No Solution for the day found. {e}")
@@ -69,14 +76,25 @@ def run_solution(year, day):
         print(f"Solution not ready: {e}")
 
 
+def run_solution(solve_function: Callable, puzzle_string: str, measure_runtime=False):
+    start_time = perf_counter()
+
+    solution = solve_function(puzzle_string)
+    run_time = round((perf_counter() - start_time) * 1000, 2)
+
+    print(f"{solve_function.__name__}: {solution}", end="")
+    if measure_runtime:
+        print(f"\ttook: {run_time}ms")
+    else:
+        print("")
+
+
 if __name__ == "__main__":
     args = parser.parse_args()
-
     if args.day is None:
         for day in range(26):
             if f"Day{day}" in os.listdir(f"./python/{args.year}"):
-                print(f"Running Day {day}")
-                run_solution(args.year, day)
+                solve_puzzle(args.year, day, args.tests, args.runtime)
                 print("\n")
     else:
-        run_solution(args.year, args.day)
+        solve_puzzle(args.year, args.day, args.tests, args.runtime)

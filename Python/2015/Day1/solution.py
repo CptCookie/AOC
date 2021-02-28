@@ -1,19 +1,32 @@
-def sum_up(puzzle_input):
-    return sum([1 if n == "(" else -1 for n in puzzle_input])
+from typing import List, Union
+
+UP = 1
+DOWN = -1
+Stair = int
 
 
-def enter_basement(puzzle_input):
-    floor = 0
-    puzzle_input = [1 if n == "(" else -1 for n in puzzle_input]
-    for n, c in enumerate(puzzle_input):
-        floor += int(c)
-        if floor < 0:
-            return n + 1
+def last_floor(stairs: str):
+    return sum(stairs)
 
 
-def solution_1(puzzle_input):
-    return sum_up(puzzle_input)
+def find_floor(stairs: List[Stair], target_floor: int) -> int:
+    current_floor = 0
+    for n, current_stair in enumerate(stairs):
+        current_floor += current_stair
+        if current_floor == target_floor:
+            return n
 
 
-def solution_2(puzzle_input):
-    return enter_basement(puzzle_input)
+def parse_stairs(puzzle_string: str) -> List[Stair]:
+    stairs = [UP if n == "(" else DOWN for n in puzzle_string]
+    return stairs
+
+
+def solution_1(puzzle_string):
+    stairs = parse_stairs(puzzle_string)
+    return last_floor(stairs)
+
+
+def solution_2(puzzle_string):
+    stairs = parse_stairs(puzzle_string)
+    return find_floor(stairs, 0) + 1

@@ -1,39 +1,42 @@
 import math
 from typing import List
+from collections import namedtuple
 
 
-def parse_input(puzzle_input):
-    box_dimension = []
-    for box in puzzle_input.split("\n"):
+class Box:
+    def __init__(self, x, y, z):
+        self.x = int(x)
+        self.y = int(y)
+        self.z = int(z)
+
+    def wrapping_needed(self) -> int:
+        areas = [self.x * self.y, self.y * self.z, self.x * self.z]
+        return min(areas) + sum(areas) * 2
+
+    def ribbon_needed(self):
+        ribbon_sides = sorted([self.x, self.y, self.z])[:-1]
+        bow = self.x * self.y * self.z
+        return sum(ribbon_sides) * 2 + bow
+
+
+def parse_puzzel_string(puzzle_string) -> List[Box]:
+    box_dimensions = []
+    for box in puzzle_string.split("\n"):
         if box != "":
-            box_dimension.append([int(n) for n in box.split("x")])
-    return box_dimension
+            box = Box(*box.split("x"))
+            box_dimensions.append(box)
+    return box_dimensions
 
 
-def total_wrapping_paper(puzzle_input: str):
-    boxes = parse_input(puzzle_input)
-    paper = [paper_needed(n) for n in boxes]
-    return sum(paper)
+def total_material_needed(puzzle_string, material_function):
+    all_boxes = parse_puzzel_string(puzzle_string)
+    material = [material_function(box) for box in all_boxes]
+    return sum(material)
 
 
-def paper_needed(box: List[int]) -> int:
-    areas = [box[0] * box[1], box[1] * box[2], box[0] * box[2]]
-    return min(areas) + sum(areas) * 2
+def solution_1(puzzle_string):
+    return total_material_needed(puzzle_string, Box.wrapping_needed)
 
 
-def total_material_needed(puzzle_input, material_func):
-    boxes = parse_input(puzzle_input)
-    paper = [material_func(n) for n in boxes]
-    return sum(paper)
-
-
-def ribbon_needed(box: List[int]):
-    return sum(sorted(box)[:-1]) * 2 + math.prod(box)
-
-
-def solution_1(puzzle_input):
-    return total_material_needed(puzzle_input, paper_needed)
-
-
-def solution_2(puzzle_input):
-    return total_material_needed(puzzle_input, ribbon_needed)
+def solution_2(puzzle_string):
+    return total_material_needed(puzzle_string, Box.ribbon_needed)

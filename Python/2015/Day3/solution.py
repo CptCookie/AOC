@@ -16,16 +16,16 @@ def get_all_pos(puzzel_input: str) -> Iterable[Position]:
         current_pos = all_pos[-1]
 
         if direction is UP:
-            all_pos.append([current_pos.x, current_pos.y + 1])
+            all_pos.append(Position(current_pos.x, current_pos.y + 1))
 
         elif direction is DOWN:
-            all_pos.append([current_pos.x, current_pos.y - 1])
+            all_pos.append(Position(current_pos.x, current_pos.y - 1))
 
         elif direction is RIGHT:
-            all_pos.append([current_pos.x + 1, current_pos.y])
+            all_pos.append(Position(current_pos.x + 1, current_pos.y))
 
         elif direction is LEFT:
-            all_pos.append([current_pos.x - 1, current_pos.y])
+            all_pos.append(Position(current_pos.x - 1, current_pos.y))
 
     return all_pos
 

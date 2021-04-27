@@ -58,22 +58,21 @@ def get_puzzel_input(year, day):
 
 
 def solve_puzzle(year, day, run_test=False, measure_runtime=False):
-    puzzle_string = get_puzzel_input(year, day)
+    if run_test:
+        pytest.main(["-x", "-q", f"python/{year}/Day{day}"])
+    else:
+        puzzle_string = get_puzzel_input(year, day)
 
-    try:
-        if run_test:
-            pytest.main(["-x", "-q", f"python/{year}/Day{day}"])
-        else:
+        try:
             puzzle_solution = importlib.import_module(f"{year}.Day{day}.solution")
             print(f"Solving Advent of Code {year} Day {day}:")
-
             run_solution(puzzle_solution.solution_1, puzzle_string, measure_runtime)
             run_solution(puzzle_solution.solution_2, puzzle_string, measure_runtime)
 
-    except (ModuleNotFoundError) as e:
-        print(f"No Solution for the day found. {e}")
-    except (SyntaxError, AttributeError) as e:
-        print(f"Solution not ready: {e}")
+        except (ModuleNotFoundError) as e:
+            print(f"No Solution for the day found. {e}")
+        except (SyntaxError, AttributeError) as e:
+            print(f"Solution not ready: {e}")
 
 
 def run_solution(solve_function: Callable, puzzle_string: str, measure_runtime=False):

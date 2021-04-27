@@ -12,7 +12,6 @@ class IntCodeProgramm:
 
     def run_programm(self):
         while True:
-            # print(self.pointer, self.memory[self.pointer : self.pointer + 4])
             opcode = self.memory[self.pointer]
             if opcode == 99:
                 return

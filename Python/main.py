@@ -39,12 +39,12 @@ def read_input_from_http(year, day):
 
 
 def read_input_from_file(year, day):
-    with open(f"./python/cache/{year}-{day}.txt", "r") as f:
+    with open(f"./cache/{year}-{day}.txt", "r") as f:
         return f.read()
 
 
 def write_input_to_file(year, day, data):
-    with open(f"./python/cache/{year}-{day}.txt", "w") as f:
+    with open(f"./cache/{year}-{day}.txt", "w") as f:
         f.write(data)
 
 
@@ -59,7 +59,7 @@ def get_puzzel_input(year, day):
 
 def solve_puzzle(year, day, run_test=False, measure_runtime=False):
     if run_test:
-        pytest.main(["-x", "-q", f"python/{year}/Day{day}"])
+        pytest.main(["-q", f"{year}/Day{day}"])
     else:
         puzzle_string = get_puzzel_input(year, day)
 
@@ -92,7 +92,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     if args.day is None:
         for day in range(26):
-            if f"Day{day}" in os.listdir(f"./python/{args.year}"):
+            if f"Day{day}" in os.listdir(f"./{args.year}"):
                 solve_puzzle(args.year, day, args.tests, args.runtime)
                 print("\n")
     else:

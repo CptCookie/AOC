@@ -6,6 +6,6 @@ def test_solution_1():
     assert False
 
 
-def test_soolution_2():
+def test_solution_2():
     test_input = ""
     assert False

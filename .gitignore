@@ -17,7 +17,7 @@ Cargo.lock
 __pycache__/
 *.py[cod]
 *$py.class
-
+cache/
 # C extensions
 *.so
 

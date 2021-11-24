@@ -1,10 +1,4 @@
-from .solution import number_valid_triange_col, solution_2, hundred
-
-
-def test_hundred():
-    assert hundred(1129) == 1
-    assert hundred(1000) == 0
-    assert hundred(10) == 0
+from .solution import number_valid_triange_col, solution_2
 
 
 def test_number_triangle_col():

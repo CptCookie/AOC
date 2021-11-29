@@ -28,7 +28,7 @@ This is my collection of all of my Advent of Code solutions. They are organized 
 | Day 19 | P     |      |      |      |       |      |      |
 | Day 20 | P     |      |      |      |       |      |      |
 | Day 21 | P     |      |      |      |       |      |      |
-| Day 22 |       |      |      |      |       |      |      |
-| Day 23 |       |      |      |      |       |      |      |
+| Day 22 | P     |      |      |      |       |      |      |
+| Day 23 | P     |      |      |      |       |      |      |
 | Day 24 | P     |      |      |      |       |      |      |
-| Day 25 |       |      |      |      |       |      |      |
+| Day 25 | P     |      |      |      |       |      |      |

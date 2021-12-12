@@ -1,6 +1,3 @@
-from types import new_class
-
-
 class Cave:
     def __init__(self, name: str):
         self.name = name

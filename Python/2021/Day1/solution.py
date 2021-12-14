@@ -17,4 +17,3 @@ def solution_2(puzzle_input: str):
     deeps = parse_input(puzzle_input)
     deep_sums = [n + deeps[i + 1] + deeps[i + 2] for i, n in enumerate(deeps[:-2])]
     return find_incresing(deep_sums)
-drop-shadow(1px 0 0px #fff) drop-shadow(0 1px 0 #fff) drop-shadow(-1px 0 0 #fff) drop-shadow(0 -1px 0 #fff);

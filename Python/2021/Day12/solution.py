@@ -77,5 +77,5 @@ def solution_1(puzzle_input: str):
 def solution_2(puzzle_input: str):
     data = parse_data(puzzle_input)
     nodes = Cave.build_network(data)
-    pathes = nodes["start"].find_all_pathes_to(nodes["end"], single_cave_twice=True)
+    pathes = nodes["start"].find_all_pathes_to(nodes["end"], double_small=True)
     return len(pathes)

@@ -3,8 +3,8 @@ from .solution import parse_data, solution_1, solution_2, AssemBunnyComputer
 
 def test_cpy_int():
     c = AssemBunnyComputer([])
-    c.cpy("a", 23)
-    assert c.registers["a"] == 23
+    c.cpy("a", 12)
+    assert c.registers["a"] == 12
 
 
 def test_cpy_str():

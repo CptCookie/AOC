@@ -10,7 +10,7 @@ def parse_patterns(puzzle_input):
 
 def count_for_cicle(polymer, patterns, cicle):
     elements = Counter(polymer)
-    parts = Counter([polymer[i:i+2] for i in range(len(polymer) - 1)])
+    parts = Counter([polymer[i : i + 2] for i in range(len(polymer) - 1)])
 
     for _ in range(cicle):
         parts, old_parts = Counter(), parts

@@ -1,4 +1,4 @@
-from typing import List, Iterable, Tuple
+from typing import List, Tuple
 
 
 def parse_data(puzzle_input: str) -> List[List[int]]:

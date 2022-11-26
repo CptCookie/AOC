@@ -59,12 +59,12 @@ def get_puzzel_input(year, day):
 
 def solve_puzzle(year, day, run_test=False, measure_runtime=False):
     if run_test:
-        pytest.main(["-q", f"{year}/Day{day}"])
+        pytest.main(["-q", f"Year{year}/Day{day}"])
     else:
         puzzle_string = get_puzzel_input(year, day)
 
         try:
-            puzzle_solution = importlib.import_module(f"{year}.Day{day}.solution")
+            puzzle_solution = importlib.import_module(f"Year{year}.Day{day}.solution")
             print(f"Solving Advent of Code {year} Day {day}:")
             run_solution(puzzle_solution.solution_1, puzzle_string, measure_runtime)
             run_solution(puzzle_solution.solution_2, puzzle_string, measure_runtime)

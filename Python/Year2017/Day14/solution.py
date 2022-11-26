@@ -1,4 +1,4 @@
-from year_2017.Day10.solution import solution_2 as knot_hash
+from Year2017.Day10.solution import solution_2 as knot_hash
 
 Disk = list[list[str | int]]
 

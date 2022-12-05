@@ -17,9 +17,8 @@ def parse_data(puzzle_input: str):
 def move_crates(stack: list[list[str]], amount: int, from_idx: int, to_idx: int, indiv=False):
     move = stack[from_idx-1][-amount:]
     if indiv:
-        stack[to_idx - 1].extend(reversed(move))
-    else:
-        stack[to_idx - 1].extend(move)
+        move.reverse()
+    stack[to_idx - 1].extend(move)
     stack[from_idx -1] = stack[from_idx-1][:-amount]
     return stack
 

@@ -13,10 +13,10 @@ TEST_INPUT = """[V]     [B]                     [C]
  1   2   3   4   5   6   7   8   9 
 
 move 1 from 9 to 2
-move 4 from 6 to 1
-move 4 from 2 to 6
-move 5 from 8 to 7
-move 4 from 9 to 2"""
+move 23 from 6 to 1
+move 4 from 2 to 3
+move 11 from 8 to 7
+move 4 from 1 to 2"""
 
 test_satck = [
     ["Z", "N"],
@@ -71,7 +71,7 @@ def test_parse_stack():
 
 def test_parse_moves():
     _, moves = parse_data(TEST_INPUT)
-    assert moves == [[1, 9, 2], [4, 6, 1], [4, 2, 6], [5, 8, 7], [4, 9, 2]]
+    assert moves == [[1, 9, 2], [23, 6, 1], [4, 2, 3], [11, 8, 7], [4, 1, 2]]
 
 
 def test_solution_1():

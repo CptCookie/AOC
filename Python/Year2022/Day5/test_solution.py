@@ -30,18 +30,18 @@ test_moves = [[1, 2, 1], [3, 1, 3], [2, 2, 1], [1, 1, 2]]
 
 
 def test_move_crate():
-    assert move_crates(test_satck, 1, 2, 1) == [["Z", "N", "D"], ["M", "C"], ["P"]]
-    assert move_crates([["Z", "N", "D"], ["M", "C"], ["P"]], 3, 1, 3) == [
+    assert move_crates(test_satck, 1, 2, 1, True) == [["Z", "N", "D"], ["M", "C"], ["P"]]
+    assert move_crates([["Z", "N", "D"], ["M", "C"], ["P"]], 3, 1, 3, True) == [
         [],
         ["M", "C"],
         ["P", "D", "N", "Z"],
     ]
-    assert move_crates([[], ["M", "C"], ["P", "D", "N", "Z"]], 2, 2, 1) == [
+    assert move_crates([[], ["M", "C"], ["P", "D", "N", "Z"]], 2, 2, 1, True) == [
         ["C", "M"],
         [],
         ["P", "D", "N", "Z"],
     ]
-    assert move_crates([["C", "M"], [], ["P", "D", "N", "Z"]], 1, 1, 2) == [
+    assert move_crates([["C", "M"], [], ["P", "D", "N", "Z"]], 1, 1, 2, True) == [
         ["C"],
         ["M"],
         ["P", "D", "N", "Z"],
@@ -49,9 +49,14 @@ def test_move_crate():
 
 
 def test_move_create_end():
+    assert move_crates([[], ["a", "b", "c"]], 1, 2, 1, True) == [["c"], ["a", "b"]]
+    assert move_crates([[], ["a", "b", "c"]], 2, 2, 1, True) == [["c", "b"], ["a"]]
+    assert move_crates([[], ["a", "b", "c"]], 3, 2, 1, True) == [["c", "b", "a"], []]
+
+def test_move_all_crates():
     assert move_crates([[], ["a", "b", "c"]], 1, 2, 1) == [["c"], ["a", "b"]]
-    assert move_crates([[], ["a", "b", "c"]], 2, 2, 1) == [["c", "b"], ["a"]]
-    assert move_crates([[], ["a", "b", "c"]], 3, 2, 1) == [["c", "b", "a"], []]
+    assert move_crates([[], ["a", "b", "c"]], 2, 2, 1) == [["b", "c"], ["a"]]
+    assert move_crates([[], ["a", "b", "c"]], 3, 2, 1) == [["a", "b", "c"], []]
 
 
 def test_parse_stack():
@@ -72,15 +77,3 @@ def test_parse_stack():
 def test_parse_moves():
     _, moves = parse_data(TEST_INPUT)
     assert moves == [[1, 9, 2], [23, 6, 1], [4, 2, 3], [11, 8, 7], [4, 1, 2]]
-
-
-def test_solution_1():
-    stacks = deepcopy(test_satck)
-    for m in test_moves:
-        stacks = move_crates(stacks, *m)
-
-    assert "".join([l[-1] for l in stacks]) == "CMZ"
-
-
-# def test_solution_2():
-#     pass

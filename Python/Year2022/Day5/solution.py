@@ -14,20 +14,28 @@ def parse_data(puzzle_input: str):
 
     return stacks, moves
 
-
-def move_crates(stack: list[list[str]], amount: int, from_idx: int, to_idx: int):
-    for _ in range(amount):
-        stack[to_idx - 1].append(stack[from_idx - 1].pop())
+def move_crates(stack: list[list[str]], amount: int, from_idx: int, to_idx: int, indiv=False):
+    move = stack[from_idx-1][-amount:]
+    if indiv:
+        stack[to_idx - 1].extend(reversed(move))
+    else:
+        stack[to_idx - 1].extend(move)
+    stack[from_idx -1] = stack[from_idx-1][:-amount]
     return stack
 
 
 def solution_1(puzzle_input: str):
     stacks, moves = parse_data(puzzle_input)
     for m in moves:
-        move_crates(stacks, *m)
+        move_crates(stacks, *m, indiv=True)
 
     return "".join([s.pop() for s in stacks])
 
 
 def solution_2(puzzle_input: str):
-    pass
+    stacks, moves = parse_data( puzzle_input )
+    for m in moves:
+        move_crates( stacks, *m, )
+
+    return "".join( [ s.pop() for s in stacks ] )
+

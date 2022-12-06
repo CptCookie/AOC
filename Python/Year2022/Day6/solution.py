@@ -1,6 +1,7 @@
 def find_destinct_chars(msg: str, length: int) -> int:
-    for i in range(length, len(msg) - length):
-        if len(set(msg[i - length : i])) == len(msg[i - length : i]):
+    for i in range(length, len(msg)):
+        window = msg[i - length : i]
+        if len(set(window)) == len(window):
             return i
     return None
 

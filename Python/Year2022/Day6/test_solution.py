@@ -1,18 +1,16 @@
-from .solution import solution_1, solution_2, find_start
+from .solution import find_destinct_chars
 
 
-def test_find_start():
-    assert find_start("bvwbjplbgvbhsrlpgdmjqwftvncz") == 5
-    assert find_start("nppdvjthqldpwncqszvftbrmjlhg") == 6
-    assert find_start("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg") == 10
-    assert find_start("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw") == 11
+def test_find_destinct_char_4():
+    assert find_destinct_chars("bvwbjplbgvbhsrlpgdmjqwftvncz", 4) == 5
+    assert find_destinct_chars("nppdvjthqldpwncqszvftbrmjlhg", 4) == 6
+    assert find_destinct_chars("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg", 4) == 10
+    assert find_destinct_chars("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw", 4) == 11
 
 
-def test_solution_1():
-    test_input = ""
-    assert solution_1(test_input)
-
-
-def test_solution_2():
-    test_input = ""
-    assert solution_2(test_input)
+def test_find_destinct_char_14():
+    assert find_destinct_chars("mjqjpqmgbljsphdztnvjfqwrcgsmlb", 14) == 19
+    assert find_destinct_chars("bvwbjplbgvbhsrlpgdmjqwftvncz", 14) == 23
+    assert find_destinct_chars("nppdvjthqldpwncqszvftbrmjlhg", 14) == 23
+    assert find_destinct_chars("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg", 14) == 29
+    assert find_destinct_chars("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw", 14) == 26

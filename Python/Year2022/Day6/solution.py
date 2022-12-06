@@ -3,7 +3,6 @@ def find_destinct_chars(msg: str, length: int) -> int:
         window = msg[i - length : i]
         if len(set(window)) == len(window):
             return i
-    return None
 
 
 def solution_1(puzzle_input: str):

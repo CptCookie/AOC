@@ -21,5 +21,4 @@ def test_solution_1():
 
 
 def test_solution_2():
-    test_input = ""
-    assert solution_2(test_input)
+    assert solution_2(TEST_INPUT) == 29

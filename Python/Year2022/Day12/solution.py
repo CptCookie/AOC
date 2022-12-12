@@ -1,5 +1,4 @@
 from queue import PriorityQueue
-from time import perf_counter_ns
 
 
 def parse_data(puzzle_input: str) -> list[str]:
@@ -65,5 +64,5 @@ def solution_1(puzzle_input: str):
 
 def solution_2(puzzle_input: str):
     map, start, end = parse_data( puzzle_input )
-    all_starts = [(y,x) for y, line in enumerate(map) for x,c in enumerate(line) if c == "a"]
+    all_starts = [(x,y) for y, line in enumerate(map) for x,c in enumerate(line) if c == "a"]
     return min(walk(map, s, end) for s in all_starts)

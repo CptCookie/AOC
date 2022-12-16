@@ -111,7 +111,6 @@ def test_coverage_line():
     for n in range(-1, 25):
         assert n in result or n == 2
 
-
     """
        o
       o.o

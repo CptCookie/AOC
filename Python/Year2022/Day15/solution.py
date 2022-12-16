@@ -63,8 +63,6 @@ def solution_2(puzzle_input: str):
         fringes.extend(get_sensor_fring(*s))
 
     for xf, yf in fringes:
-        if 0 <= xf <= 4_000_000 and  0 <= yf <= 4_000_000 :
-            if all(abs(xf - xs) + abs(yf - ys) > dist for xs, ys, dist in srange ):
-                return  xf*4_000_000 + yf
-
-
+        if 0 <= xf <= 4_000_000 and 0 <= yf <= 4_000_000:
+            if all(abs(xf - xs) + abs(yf - ys) > dist for xs, ys, dist in srange):
+                return xf * 4_000_000 + yf

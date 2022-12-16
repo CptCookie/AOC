@@ -4,6 +4,9 @@ from .solution import (
     parse_input,
     get_sensor_line,
     get_covered_line,
+    get_sensor_line_ranges,
+    get_sensor_range,
+    get_sensor_fring,
 )
 
 TEST_INPUT = """Sensor at x=2, y=18: closest beacon is at x=-2, y=15
@@ -64,6 +67,40 @@ def test_sensor_line():
     ]
 
 
+def test_sensor_line_range():
+    srange = get_sensor_range([[8, 7, 2, 10]])
+    assert get_sensor_line_ranges(*srange[0], -2) == (8, 8)
+    assert get_sensor_line_ranges(*srange[0], -1) == (7, 9)
+    assert get_sensor_line_ranges(*srange[0], 0) == (6, 10)
+    assert get_sensor_line_ranges(*srange[0], 10) == (2, 14)
+    assert get_sensor_line_ranges(*srange[0], 14) == (6, 10)
+
+
+def test_get_sensor_fring():
+    expected = [
+        (4, 0),
+        (3, 1),
+        (5, 1),
+        (2, 2),
+        (6, 2),
+        (1, 3),
+        (7, 3),
+        (0, 4),
+        (8, 4),
+        (1, 5),
+        (7, 5),
+        (2, 6),
+        (6, 6),
+        (3, 7),
+        (5, 7),
+        (4, 8),
+    ]
+    result = get_sensor_fring(4, 4, 3)
+    for exp in expected:
+        assert exp in result
+    assert len(result) == len(expected)
+
+
 def test_parsing():
     assert parse_input(TEST_INPUT) == TEST_DATA
 
@@ -75,9 +112,12 @@ def test_coverage_line():
         assert n in result or n == 2
 
 
-# def test_solution_1():
-#     assert solution_1(TEST_INPUT)
-
-
-# def test_solution_2():
-#     assert solution_2(TEST_INPUT)
+    """
+       o
+      o.o
+     o...o
+    o..x..o
+     o...o
+      o.o
+       o
+    """

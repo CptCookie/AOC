@@ -71,6 +71,13 @@ def test_parsing():
     assert nodes[0].prev == nodes[-1]
     assert nodes[-1].next == nodes[0]
 
+def test_510():
+    nodes = parse_input("5\n1\n0")
+    mix_decrypt(nodes)
+    assert nodes[0].value == 5
+    assert nodes[0].next.value == 1
+    assert nodes[0].next.next.value == 0
+
 def test_solution_1():
     assert solution_1(TEST_INPUT) == 3
 

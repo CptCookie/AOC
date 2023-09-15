@@ -3,8 +3,9 @@ pub mod utils;
 use std::fs;
 use std::io;
 use std::path::Path;
+use std::time;
 
-use clap::{arg, command, value_parser, ArgMatches};
+use clap::{arg, command, value_parser, ArgMatches, ArgAction};
 
 use rust::solutions;
 
@@ -17,33 +18,53 @@ fn main() {
     let year = args.get_one::<u16>("year").unwrap();
     let day = args.get_one::<u8>("day");
     let token = args.get_one::<String>("token");
+    let perf = args.get_flag("perf");
+
     match token {
-        Some(t) => run_aoc(year, day, t),
-        None => run_aoc(year, day, &load_token_file().unwrap()),
+        Some(t) => run_aoc(year, day, t, perf), 
+        None => run_aoc(year, day, &load_token_file().unwrap(), perf),
     }
 }
 
-fn run_aoc(year: &u16, day: Option<&u8>, token: &String) {
+fn run_aoc(year: &u16, day: Option<&u8>, token: &String, perf: bool) {
     match day {
-        Some(d) => try_run_day(year, d, token),
-        None => run_year(year, token),
+        Some(d) => try_run_day(year, d, token, perf),
+        None => run_year(year, token, perf),
     }
 }
 
-fn run_year(year: &u16, token: &String) {
+fn run_year(year: &u16, token: &String, perf: bool) {
     for day in 1..=25 {
-        try_run_day(year, &day, token);
+        try_run_day(year, &day, token, perf);
     }
 }
 
-fn try_run_day(year: &u16, day: &u8, token: &String) {
+fn try_run_day(year: &u16, day: &u8, token: &String, perf: bool) {
     if let Some(s) = solutions::get_day(year, day) {
         let input = get_input(year, day, token);
         println!("Solving Advent of Code {year} Day {day}");
-        let part_1 = s.0(&input);
-        println!("Solution part 1: {part_1}");
-        let part_2 = s.1(&input);
-        println!("Solution part 2: {part_2}\n");
+
+        if perf {
+            // Run with performance measurement
+            let mut start = time::Instant::now();
+            let part_1 = s.0(&input);
+            let elapsed = start.elapsed();
+            println!("Solution part 1: {part_1}\t({:.2?})", elapsed);
+
+            start = time::Instant::now();
+            let part_2 = s.1(&input);
+            let elapsed = start.elapsed();
+            println!("Solution part 2: {part_2}\t({:.2?})\n", elapsed);
+            
+        } else {
+            // Run without performance measurement
+            let part_1 = s.0(&input);
+            println!("Solution part 1: {part_1}");
+
+            let part_2 = s.1(&input);
+            println!("Solution part 2: {part_2}\n");
+        }
+
     }
 }
 
@@ -100,5 +121,6 @@ fn get_args() -> ArgMatches {
                 .value_parser(value_parser!(u8).range(1..25)),
         )
         .arg(arg!([token] "session Token to fetch inputs from AOC").env("AOC_TOKEN"))
+        .arg(arg!(-p --perf "measure execution times").action(ArgAction::SetTrue))
         .get_matches();
 }

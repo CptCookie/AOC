@@ -5,7 +5,7 @@ pub fn part_1(input: &String) -> String {
     let mut maps: Vec<HashMap<char, i32>> = Vec::new();
     let mut twos: i32 = 0;
     let mut threes: i32 = 0;
-    
+
     for line in ids {
         maps.push(get_map(line))
     }

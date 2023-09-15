@@ -1,31 +1,24 @@
-use std::io::{self, Read};
-
-fn calc_fuel(mass: i64) -> i64 {
+fn calc_fuel(mass: u32) -> u32 {
     return (mass / 3) - 2;
 }
 
-fn main() {
-    /* Create empty string with some capacity at the beginning, so as to make less relocations
-     * during reading the input
-     */
-    let mut input = String::with_capacity(4096);
-    io::stdin().read_to_string(&mut input).expect("Error reading input");
-    
-    let mut sum: i64 = 0;
-    for word in input.split_ascii_whitespace() {
-        let mass: i64 = word.parse().expect("Invalid number Dude");
-
-        let mut additionalFuel = calc_fuel(mass);
-        sum += additionalFuel;
-
-        /* Doing simple things in a loop is always better than recursion!
-         * 8 is the highest value that divided by 3 and floored is equal to 2
-         */
-        while additionalFuel > 8 {
-            additionalFuel = calc_fuel(additionalFuel);
-            sum += additionalFuel;
-        }
-    }
-
-    println!("{}", sum);
+pub fn part_1(input: &String) -> String {
+    input.split_ascii_whitespace().map(|word| calc_fuel(word.parse::<u32>().unwrap())).sum::<u32>().to_string()
 }
+
+pub fn part_2(input: &String) -> String {
+    let mass: u32 = input.split_ascii_whitespace().map(|word| word.parse::<u32>().unwrap()).sum();
+    let mut add_fuel = calc_fuel(mass);
+    let mut sum = add_fuel;
+    
+    /* Doing simple things in a loop is always better than recursion!
+        * 8 is the highest value that divided by 3 and floored is equal to 2
+        */
+    while add_fuel > 8 {
+        add_fuel = calc_fuel(add_fuel);
+        sum += add_fuel;
+    }
+    sum.to_string()
+}
+
+

@@ -15,4 +15,4 @@ fn read_input() -> Result<Vec<i32>, io::Error> {
 
 fn main(){
     println!("{:#?}", read_input().unwrap())
-}
+} 

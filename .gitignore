@@ -121,3 +121,4 @@ venv.bak/
 
 # AOC specific
 config.py
+rust/token

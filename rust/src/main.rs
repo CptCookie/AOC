@@ -5,7 +5,7 @@ use std::io;
 use std::path::Path;
 use std::time;
 
-use clap::{arg, command, value_parser, ArgMatches, ArgAction};
+use clap::{arg, command, value_parser, ArgAction, ArgMatches};
 
 use rust::solutions;
 
@@ -21,7 +21,7 @@ fn main() {
     let perf = args.get_flag("perf");
 
     match token {
-        Some(t) => run_aoc(year, day, t, perf), 
+        Some(t) => run_aoc(year, day, t, perf),
         None => run_aoc(year, day, &load_token_file().unwrap(), perf),
     }
 }
@@ -55,7 +55,6 @@ fn try_run_day(year: &u16, day: &u8, token: &String, perf: bool) {
             let part_2 = s.1(&input);
             let elapsed = start.elapsed();
             println!("Solution part 2: {part_2}\t({:.2?})\n", elapsed);
-            
         } else {
             // Run without performance measurement
             let part_1 = s.0(&input);
@@ -64,7 +63,6 @@ fn try_run_day(year: &u16, day: &u8, token: &String, perf: bool) {
             let part_2 = s.1(&input);
             println!("Solution part 2: {part_2}\n");
         }
-
     }
 }
 

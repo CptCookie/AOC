@@ -1,4 +1,4 @@
-from .solution import get_combo_char, hash_valid, get_hashes, get_streched_hash
+from .solution import get_combo_char, hash_valid, get_hashes, get_stretched_hash
 
 
 def test_combo():
@@ -22,11 +22,11 @@ def test_hash_validation_stretch():
 
 
 def test_streched_hash():
-    assert get_streched_hash("abc", 0) == "a107ff634856bb300138cac6568c0f24"
-    assert "eee" in get_streched_hash("abc", 10)
-    assert "eeeee" in get_streched_hash("abc", 89)
-    assert "fff" in get_streched_hash("abc", 22551)
-    assert "fffff" in get_streched_hash("abc", 22859)
+    assert get_stretched_hash("abc", 0) == "a107ff634856bb300138cac6568c0f24"
+    assert "eee" in get_stretched_hash("abc", 10)
+    assert "eeeee" in get_stretched_hash("abc", 89)
+    assert "fff" in get_stretched_hash("abc", 22551)
+    assert "fffff" in get_stretched_hash("abc", 22859)
 
 
 def test_get_hashes():

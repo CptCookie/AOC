@@ -1,5 +1,3 @@
-use std::fs;
-
 #[derive(PartialEq)]
 enum Direction {
     Forward,
@@ -8,7 +6,7 @@ enum Direction {
 }
 struct Command {
     dir: Direction,
-    dist: i32,
+    dist: i64,
 }
 
 impl Command {
@@ -33,14 +31,15 @@ impl Direction {
     }
 }
 
-fn solution_1(cmds: &Vec<Command>) -> i32 {
-    let forward: i32 = cmds
+pub fn part_1(input: &String) -> String {
+    let cmds = parse_input(input);
+    let forward: i64 = cmds
         .iter()
         .filter(|cmd| cmd.dir == Direction::Forward)
         .map(|cmd| cmd.dist)
         .sum();
 
-    let vertical: i32 = cmds
+    let vertical: i64 = cmds
         .iter()
         .map(|cmd| match cmd.dir {
             Direction::Up => -cmd.dist,
@@ -48,13 +47,14 @@ fn solution_1(cmds: &Vec<Command>) -> i32 {
             _ => 0,
         })
         .sum();
-    forward * vertical
+    (forward * vertical).to_string()
 }
 
-fn solution_2(cmds: &Vec<Command>) -> i32 {
-    let mut horizontal: i32 = 0;
+pub fn part_2(input: &String) -> String {
+    let cmds = parse_input(input);
+    let mut horizontal: i64 = 0;
     let mut vertical = 0;
-    let mut aim: i32 = 0;
+    let mut aim: i64 = 0;
 
     for cmd in cmds.iter() {
         match cmd.dir {
@@ -63,22 +63,13 @@ fn solution_2(cmds: &Vec<Command>) -> i32 {
                 vertical += aim * cmd.dist;
             }
             Direction::Down => aim += cmd.dist,
-            Direction::Up => aim -= cmd.dist,
-            _ => (),
+            Direction::Up => aim -= cmd.dist
         }
     }
-    horizontal * vertical
+    (horizontal * vertical).to_string()
 }
 
-fn main() {
-    let puzzle_input = fs::read_to_string("input.txt").unwrap();
-    let puzzle_data = parse_data(&puzzle_input);
-
-    println!("solution 1: {}", solution_1(&puzzle_data));
-    println!("solution 2: {}", solution_2(&puzzle_data));
-}
-
-fn parse_data(data: &String) -> Vec<Command> {
+fn parse_input(data: &String) -> Vec<Command> {
     data.split("\n")
         .filter(|x| x != &"")
         .map(|e| Command::from_line(e))
@@ -87,19 +78,20 @@ fn parse_data(data: &String) -> Vec<Command> {
 
 #[cfg(test)]
 mod test {
-    use crate::*;
+    use super::*;
 
     #[test]
     fn test_solution_1(){
         let test_data = String::from("forward 5\ndown 5\nforward 8\nup 3\ndown 8\nforward 2");
-        assert_eq!(solution_1(&parse_data(&test_data)), 150)
+        assert_eq!(part_1(&test_data), 150.to_string())
     }
 
 
     #[test]
     fn test_solution_2(){
         let test_data = String::from("forward 5\ndown 5\nforward 8\nup 3\ndown 8\nforward 2");
-        assert_eq!(solution_2(&parse_data(&test_data)), 900)
+        assert_eq!(part_2(&test_data), 900.to_string())
     }
 
 }
+ 

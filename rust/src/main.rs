@@ -11,7 +11,6 @@ use rust::solutions;
 const CACHE: &str = "./cache/";
 const TOKEN_FILE: &str = "./token";
 
-
 fn main() {
     let args = get_args();
 
@@ -20,14 +19,14 @@ fn main() {
     let token = args.get_one::<String>("token");
     match token {
         Some(t) => run_aoc(year, day, t),
-        None => run_aoc(year, day, &load_token_file().unwrap())
+        None => run_aoc(year, day, &load_token_file().unwrap()),
     }
 }
 
 fn run_aoc(year: &u16, day: Option<&u8>, token: &String) {
     match day {
         Some(d) => try_run_day(year, d, token),
-        None => run_year(year, token)
+        None => run_year(year, token),
     }
 }
 
@@ -45,8 +44,8 @@ fn try_run_day(year: &u16, day: &u8, token: &String) {
         println!("Solution part 1: {part_1}");
         let part_2 = s.1(&input);
         println!("Solution part 2: {part_2}\n");
-    } 
-}   
+    }
+}
 
 fn get_input(year: &u16, day: &u8, token: &String) -> String {
     match load_input_file(year, day) {
@@ -64,8 +63,8 @@ fn load_input_file(year: &u16, day: &u8) -> io::Result<String> {
 }
 
 fn load_token_file() -> Option<String> {
-    if Path::new(TOKEN_FILE).exists(){
-        return fs::read_to_string(TOKEN_FILE).ok()
+    if Path::new(TOKEN_FILE).exists() {
+        return fs::read_to_string(TOKEN_FILE).ok();
     }
     None
 }
@@ -96,7 +95,9 @@ fn get_args() -> ArgMatches {
     return command!()
         .arg(arg!([year] "year [2016..2023]").value_parser(value_parser!(u16).range(2015..2023)))
         .arg(
-            arg!([day] "optional day [1..25]").required(false).value_parser(value_parser!(u8).range(1..25)),
+            arg!([day] "optional day [1..25]")
+                .required(false)
+                .value_parser(value_parser!(u8).range(1..25)),
         )
         .arg(arg!([token] "session Token to fetch inputs from AOC").env("AOC_TOKEN"))
         .get_matches();

@@ -1,10 +1,11 @@
-use std::fs;
+pub fn part_1(input: &String) -> String {
+    let data = parse_data(input);
+    does_increment(&data, 1).to_string()
+}
 
-fn main() {
-    let puzzle_input = fs::read_to_string("input.txt").unwrap();
-    let puzzle_data = parse_data(puzzle_input);
-    println!("{}", does_increment(&puzzle_data, 1));
-    println!("{}", does_increment(&puzzle_data, 3));
+pub fn part_2(input: &String) -> String {
+    let data = parse_data(input);
+    does_increment(&data, 3).to_string()
 }
 
 fn does_increment(deep_scan: &Vec<u16>, window: usize) -> usize {
@@ -15,7 +16,7 @@ fn does_increment(deep_scan: &Vec<u16>, window: usize) -> usize {
         .count()
 }
 
-fn parse_data(data: String) -> Vec<u16> {
+fn parse_data(data: &String) -> Vec<u16> {
     data.split("\n")
         .filter(|x| x != &"")
         .map(|e| e.parse::<u16>().unwrap())
@@ -24,7 +25,7 @@ fn parse_data(data: String) -> Vec<u16> {
 
 #[cfg(test)]
 mod test {
-    use crate::*;
+    use super::*;
 
     #[test]
     fn test_single_compare() {

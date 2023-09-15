@@ -1,5 +1,3 @@
-use std::fs;
-
 fn common_bit_at(binarys: &Vec<&str>, index: usize, most_common: bool) -> char {
     let one_count = binarys
         .iter()
@@ -30,10 +28,11 @@ fn filter_by_common_bit(binarys: &Vec<&str>, most_common: bool) -> Option<i32> {
     return None;
 }
 
-fn solution_1(binarys: &Vec<&str>) -> i32 {
+pub fn part_1(input: &String) -> String {
+    let binarys = parse_input(input);
     let mut bin_solution: Vec<char> = vec![];
     for index in 0..binarys[0].len() {
-        bin_solution.push(common_bit_at(binarys, index, true))
+        bin_solution.push(common_bit_at(&binarys, index, true))
     }
 
     let gamma = i32::from_str_radix(&bin_solution.iter().collect::<String>(), 2).unwrap();
@@ -49,45 +48,34 @@ fn solution_1(binarys: &Vec<&str>) -> i32 {
     )
     .unwrap();
 
-    return gamma * epsilon;
+    return (gamma * epsilon).to_string();
 }
 
-fn solution_2(binarys: &Vec<&str>) -> i32 {
+pub fn part_2(input: &String) -> String {
+    let binarys = parse_input(input);
     let gamma = filter_by_common_bit(&binarys, true).unwrap();
     let epsilon = filter_by_common_bit(&binarys, false).unwrap();
-    return gamma * epsilon;
+    (gamma * epsilon).to_string()
 }
 
-fn main() {
-    let puzzle_input = fs::read_to_string("input.txt").unwrap();
-    let puzzle_data: Vec<&str> = puzzle_input.split("\r\n").filter(|x| x != &"").collect();
-
-    println!("solution 1: {}", solution_1(&puzzle_data));
-    println!("solution 2: {}", solution_2(&puzzle_data));
+fn parse_input(input: &String) -> Vec<&str> {
+    input.split_ascii_whitespace().filter(|x| x != &"").collect()
 }
 
 #[cfg(test)]
 mod test {
 
-    use crate::*;
+    use super::*;
 
     #[test]
     fn test_solution_1() {
-        let test_data: Vec<&str> = vec![
-            "00100", "11110", "10110", "10111", "10101", "01111", "00111", "11100", "10000",
-            "11001", "00010", "01010",
-        ];
-        assert_eq!(solution_1(&test_data), 198)
+        let test_data = String::from("00100\n11110\n10110\n10111\n10101\n01111\n00111\n11100\n10000\n11001\n00010\n01010\n");
+        assert_eq!(part_1(&test_data), 198.to_string())
     }
 
     #[test]
     fn test_solution_2() {
-        let test_data: Vec<&str> = vec![
-            "00100", "11110", "10110", "10111", "10101", "01111", "00111", "11100", "10000",
-            "11001", "00010", "01010",
-        ];
-        assert_eq!(filter_by_common_bit(&test_data, true), Some(23));
-        assert_eq!(filter_by_common_bit(&test_data, false), Some(10));
-        assert_eq!(solution_2(&test_data), 230)
+        let test_data = String::from("00100\n11110\n10110\n10111\n10101\n01111\n00111\n11100\n10000\n11001\n00010\n01010\n");
+        assert_eq!(part_2(&test_data), 230.to_string())
     }
 }

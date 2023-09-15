@@ -63,7 +63,7 @@ pub fn part_2(input: &String) -> String {
                 vertical += aim * cmd.dist;
             }
             Direction::Down => aim += cmd.dist,
-            Direction::Up => aim -= cmd.dist
+            Direction::Up => aim -= cmd.dist,
         }
     }
     (horizontal * vertical).to_string()
@@ -81,17 +81,14 @@ mod test {
     use super::*;
 
     #[test]
-    fn test_solution_1(){
+    fn test_solution_1() {
         let test_data = String::from("forward 5\ndown 5\nforward 8\nup 3\ndown 8\nforward 2");
         assert_eq!(part_1(&test_data), 150.to_string())
     }
 
-
     #[test]
-    fn test_solution_2(){
+    fn test_solution_2() {
         let test_data = String::from("forward 5\ndown 5\nforward 8\nup 3\ndown 8\nforward 2");
         assert_eq!(part_2(&test_data), 900.to_string())
     }
-
 }
- 

@@ -59,7 +59,10 @@ pub fn part_2(input: &String) -> String {
 }
 
 fn parse_input(input: &String) -> Vec<&str> {
-    input.split_ascii_whitespace().filter(|x| x != &"").collect()
+    input
+        .split_ascii_whitespace()
+        .filter(|x| x != &"")
+        .collect()
 }
 
 #[cfg(test)]
@@ -69,13 +72,17 @@ mod test {
 
     #[test]
     fn test_solution_1() {
-        let test_data = String::from("00100\n11110\n10110\n10111\n10101\n01111\n00111\n11100\n10000\n11001\n00010\n01010\n");
+        let test_data = String::from(
+            "00100\n11110\n10110\n10111\n10101\n01111\n00111\n11100\n10000\n11001\n00010\n01010\n",
+        );
         assert_eq!(part_1(&test_data), 198.to_string())
     }
 
     #[test]
     fn test_solution_2() {
-        let test_data = String::from("00100\n11110\n10110\n10111\n10101\n01111\n00111\n11100\n10000\n11001\n00010\n01010\n");
+        let test_data = String::from(
+            "00100\n11110\n10110\n10111\n10101\n01111\n00111\n11100\n10000\n11001\n00010\n01010\n",
+        );
         assert_eq!(part_2(&test_data), 230.to_string())
     }
 }

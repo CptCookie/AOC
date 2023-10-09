@@ -18,6 +18,8 @@ def time_alignment(discs: list[tuple[int, int]]):
                 total_periode = lcm(total_periode, size)
                 time = ctime
                 break  # move to next disk
+        else:
+            raise ValueError("Disks do not allign")
 
     return time - len(discs)
 
@@ -29,8 +31,7 @@ def lcm(a, b):
     for i in range(1, a * b + 1):
         if (i * min_num) % max_num == 0:
             return i * min_num
-
-    raise AttributeError(f"Could not find a LCM for {a} and {b}, [BUG]")
+    raise ValueError(f"Could not find a LCM for {a} and {b}, [BUG]")
 
 
 def solution_1(aoc_input: str):

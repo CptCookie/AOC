@@ -1,4 +1,5 @@
-from .solution import parse_data, solution_1, solution_2, AssemBunnyComputer
+from .solution import parse_data, solution_1, solution_2
+from ..assembunny import AssemBunnyComputer
 
 
 def test_cpy_int():

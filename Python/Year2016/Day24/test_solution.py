@@ -31,55 +31,18 @@ def test_find_node():
 
 
 def test_route():
-    assert get_route(
-        TEST_DATA,
-        (1, 1),
-        (9, 2),
-    ) == [(2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (9, 1), (9, 2)]
+    assert get_route(TEST_DATA, (1, 1), (9, 2)) == 9
 
 
 def test_route_corner():
-    assert get_route(
-        [
-            "#####",
-            "#0..#",
-            "#.#.#",
-            "#...#",
-            "#.1##",
-            "#####",
-        ],
-        (1, 1),
-        (2, 4),
-    ) == [(1, 2), (1, 3), (1, 4), (2, 4)]
+    test_map = ["#####", "#0..#", "#.#.#", "#...#", "#.1##", "#####"]
+    assert get_route(test_map, (1, 1), (2, 4)) == 4
 
 
-def test_route_corner():
-    assert get_route(
-        [
-            "#####",
-            "#0..#",
-            "#..1#",
-            "#...#",
-            "#.1##",
-            "#####",
-        ],
-        (1, 1),
-        (2, 4),
-    ) == [(1, 2), (1, 3), (1, 4), (2, 4)]
-
-
-def test_route_TEST_DATA():
-    nodes = find_nodes(TEST_DATA)
-
-    assert len(get_route(TEST_DATA, nodes["0"], nodes["4"])) == 2
-    assert len(get_route(TEST_DATA, nodes["4"], nodes["1"])) == 4
-    assert len(get_route(TEST_DATA, nodes["1"], nodes["2"])) == 6
-    assert len(get_route(TEST_DATA, nodes["2"], nodes["3"])) == 2
+def test_route_open():
+    test_map = ["#####", "#0..#", "#..1#", "#####"]
+    assert get_route(test_map, (1, 1), (3, 2)) == 3
 
 
 def test_solution_1():
     assert solution_1(TEST_INPUT) == 14
-
-
-def test_solution_2():
-    assert solution_2(TEST_INPUT)

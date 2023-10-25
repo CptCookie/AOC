@@ -1,5 +1,6 @@
-from collections import defaultdict
+from collections import defaultdict, deque
 from typing import Optional
+
 
 Instruction = tuple[str, str, Optional[str]]
 
@@ -27,7 +28,7 @@ class Processor:
     def execute_basic_command(self):
         # general instructions
         if self.op == "jgz":
-            if self.registers[self.addr[0]] > 0:
+            if self._get_value(self.addr[0]) > 0:
                 self.pc = self.pc + self._get_value(self.addr[1])
             else:
                 self.pc += 1
@@ -81,20 +82,19 @@ class SoundProcessor(Processor):
 class Worker(Processor):
     def __init__(self, id, instructions):
         super().__init__(instructions)
-        self.input_buffer = []
-        self.waiting = False
+        self.input_buffer = deque()
         self.receiver = None
         self.sending_counter = 0
         self.registers["p"] = id
 
+    @property
+    def waiting(self):
+        return self.op == "rcv" and not self.input_buffer
+
     def execute_pointer(self):
         if self.op == "rcv" and self.input_buffer:
-            self.registers[self.addr[0]] = self.input_buffer.pop(0)
+            self.registers[self.addr[0]] = self.input_buffer.popleft()
             self.pc += 1
-            self.waiting = False
-
-        elif self.op == "rcv" and not self.input_buffer:
-            self.waiting = True
 
         elif self.op == "snd" and self.receiver:
             self.receiver.input_buffer.append(self.registers[self.addr[0]])
@@ -125,8 +125,6 @@ def solution_2(puzzle_input: str):
     program_1.receiver = program_0
 
     while not program_0.waiting or not program_1.waiting:
-
-        print(len(program_0.input_buffer), len(program_1.input_buffer))
         program_0.execute_pointer()
         program_1.execute_pointer()
 

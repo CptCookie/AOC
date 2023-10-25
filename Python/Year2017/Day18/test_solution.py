@@ -20,10 +20,12 @@ def test_solution_1():
 def test_receive():
     w = Worker(2, [("rcv", "a")])
     w.input_buffer.append(22)
+    w.input_buffer.append(21)
     w.execute_pointer()
 
     assert w.registers["p"] == 2
     assert w.registers["a"] == 22
+    assert len(w.input_buffer) == 1
     assert w.pc == 1
 
 
@@ -32,7 +34,16 @@ def test_receive_empty():
     w.execute_pointer()
 
     assert w.registers["a"] == 0
+    assert w.waiting
     assert w.pc == 0
+
+    w.input_buffer.append(22)
+    w.execute_pointer()
+
+    assert not w.waiting
+    assert w.registers["a"] == 22
+    assert len(w.input_buffer) == 0
+    assert w.pc == 1
 
 
 def test_send():

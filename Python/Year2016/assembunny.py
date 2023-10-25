@@ -15,6 +15,9 @@ class AssemBunnyComputer:
         self.cache_jnz = cache_jnz
         self.jnz_cache = {}
 
+        self.output = []
+        self.know_states = set()
+
     def __setitem__(self, reg, value):
         self.registers[reg] = value
 
@@ -60,7 +63,7 @@ class AssemBunnyComputer:
             self.instr_pointer += 1
 
     def jnz(self, a: str | int, b: str | int):
-        if isinstance(a, int) and a != 0 or self[a] != 0:
+        if isinstance(a, int) and a != 0 or isinstance(a, str) and self[a] != 0:
             if isinstance(b, int):
                 self.instr_pointer += b
             else:
@@ -83,6 +86,21 @@ class AssemBunnyComputer:
                 case _, 3:
                     instr[0] = "jnz"
 
+    def out(self, a: str | int):
+        if self.detect_loop():
+            raise LoopException()
+        if isinstance(a, str):
+            self.output.append(self[a])
+        else:
+            self.output.append(a)
+
+    def detect_loop(self):
+        state = (tuple(self.registers.values()), self.instr_pointer)
+        if state in self.know_states:
+            return True
+        else:
+            self.know_states.add(state)
+
     def run_instr(self):
         while self.instr_pointer < len(self.instr):
             cur_instr = self.instr[self.instr_pointer]
@@ -104,3 +122,10 @@ class AssemBunnyComputer:
                 case "tgl", x:
                     self.tgl(x)
                     self.instr_pointer += 1
+                case "out", x:
+                    self.out(x)
+                    self.instr_pointer += 1
+
+
+class LoopException(ValueError):
+    pass

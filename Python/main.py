@@ -92,7 +92,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     if args.day is None:
         for day in range(26):
-            if f"Day{day}" in os.listdir(f"./{args.year}"):
+            if f"Day{day}" in os.listdir(f"./Year{args.year}"):
                 solve_puzzle(args.year, day, args.tests, args.runtime)
                 print("\n")
     else:

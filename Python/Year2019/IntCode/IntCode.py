@@ -3,7 +3,7 @@ class StopOperation(Exception):
 
 
 class IntCodeProgramm:
-    def __init__(self, instruction):
+    def __init__(self, instruction: list[int]):
         self.memory = instruction
         self.pointer = 0
         self.input = []
@@ -11,10 +11,7 @@ class IntCodeProgramm:
 
     @property
     def cmd(self):
-        if type(self.memory[self.pointer]) is int:
-            return f"{self.memory[self.pointer]:05d}"
-        else:
-            return self.memory[self.pointer].rjust(5, "0")
+        return f"{self.memory[self.pointer]:05d}"
 
     @property
     def opcode(self):

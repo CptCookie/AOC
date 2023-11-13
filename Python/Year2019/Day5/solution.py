@@ -1,4 +1,4 @@
-from ..IntCode import IntCodeProgramm
+from Year2019.IntCode import IntCodeProgramm
 
 
 def solution_1(puzzle_input):

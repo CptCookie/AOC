@@ -1,4 +1,6 @@
 import time
+from collections import defaultdict, deque
+
 import requests
 
 token = "53616c7465645f5f714a6cdb587039fed75269df026ce7ed488de790cdf65fd96d06ec495e5b02c1551c3f2b487d59d5"
@@ -75,13 +77,35 @@ class Orbit:
         return None
 
 
-def AOC_day5_step1():
-    r = requests.get(
-        "https://adventofcode.com/2019/day/6/input", cookies={"session": token}
-    )
-    sat_map = r.content.decode().strip().split("\n")
-    print(len(sat_map))
-    # sat_map= ["COM)B","B)C","C)D","D)E","E)F","B)G","G)H","D)I","E)J","J)K","K)L"]
+def parse_input(aoc_input: str) -> list[tuple]:
+    return [tuple(line.split(")")) for line in aoc_input.strip().split("\n")]
+
+
+def get_total_orbit_number(orbits):
+    orbit_num = {"COM": 0}
+    q = deque(["COM"])
+
+    while q:
+        c = q.pop()
+        for orb in orbits[c]:
+            orbit_num[orb] = orbit_num[c] + 1
+            q.append(orb)
+
+    return sum(orbit_num.values())
+
+
+def solution_1(aoc_input: str):
+    sat_map = parse_input(aoc_input)
+    orbits = defaultdict(list)
+
+    for c, o in sat_map:
+        orbits[c].append(o)
+
+    return get_total_orbit_number(orbits)
+
+
+def solution_2(aoc_input: str):
+    sat_map = parse_input(aoc_input)
     run = True
     root_COM = Orbit("COM", None)
 
@@ -93,10 +117,5 @@ def AOC_day5_step1():
             if root_COM.append(com, sat):
                 run = True
 
-    print(root_COM.sum_depth(0))
     you = root_COM.search("YOU")
-    print(you.orb_dist("SAN", 0) - 2)
-
-
-if __name__ == "__main__":
-    AOC_day5_step1()
+    return you.orb_dist("SAN", 0) - 2

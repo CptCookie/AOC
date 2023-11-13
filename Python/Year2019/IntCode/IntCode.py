@@ -20,17 +20,7 @@ class IntCodeProgramm:
     def opcode(self):
         return self.cmd[-2:]
 
-    def get_parameter_address(self, address, position_mode):
-        try:
-            if position_mode:
-                address = self.memory[address]
-                return address
-            else:
-                return address
-        except IndexError:
-            return None
-
-    def get_address(self, pos):
+    def address(self, pos):
         address = self.pointer + 1 + pos
         if self.cmd[2 - pos] == "0":
             return self.memory[address]
@@ -49,50 +39,50 @@ class IntCodeProgramm:
             case "99":
                 raise StopOperation()
             case "01":
-                self.memory[self.get_address(2)] = (
-                    self.memory[self.get_address(0)] + self.memory[self.get_address(1)]
+                self.memory[self.address(2)] = (
+                    self.memory[self.address(0)] + self.memory[self.address(1)]
                 )
                 self.pointer += 4
             case "02":
                 # multiplie
-                self.memory[self.get_address(2)] = (
-                    self.memory[self.get_address(0)] * self.memory[self.get_address(1)]
+                self.memory[self.address(2)] = (
+                    self.memory[self.address(0)] * self.memory[self.address(1)]
                 )
                 self.pointer += 4
             case "03":
                 # read input
                 value = self.input.pop()
-                self.memory[self.get_address(0)] = value
+                self.memory[self.address(0)] = value
                 self.pointer += 2
             case "04":
                 # write output
-                self.output.append(self.memory[self.get_address(0)])
+                self.output.append(self.memory[self.address(0)])
                 self.pointer += 2
             case "05":
                 # jump if true
-                if self.memory[self.get_address(0)] > 0:
-                    self.pointer = self.memory[self.get_address(1)]
+                if self.memory[self.address(0)] > 0:
+                    self.pointer = self.memory[self.address(1)]
                 else:
                     self.pointer += 3
             case "06":
                 # jump if false
-                if self.memory[self.get_address(0)] == 0:
-                    self.pointer = self.memory[self.get_address(1)]
+                if self.memory[self.address(0)] == 0:
+                    self.pointer = self.memory[self.address(1)]
                 else:
                     self.pointer += 3
             case "07":
                 # less than
-                if self.memory[self.get_address(0)] < self.memory[self.get_address(1)]:
-                    self.memory[self.get_address(2)] = 1
+                if self.memory[self.address(0)] < self.memory[self.address(1)]:
+                    self.memory[self.address(2)] = 1
                 else:
-                    self.memory[self.get_address(2)] = 0
+                    self.memory[self.address(2)] = 0
                 self.pointer += 4
             case "08":
                 # equals
-                if self.memory[self.get_address(0)] == self.memory[self.get_address(1)]:
-                    self.memory[self.get_address(2)] = 1
+                if self.memory[self.address(0)] == self.memory[self.address(1)]:
+                    self.memory[self.address(2)] = 1
                 else:
-                    self.memory[self.get_address(2)] = 0
+                    self.memory[self.address(2)] = 0
                 self.pointer += 4
             case _:
                 self.pointer += 1

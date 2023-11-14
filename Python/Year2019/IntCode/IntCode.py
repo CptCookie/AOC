@@ -1,3 +1,10 @@
+from collections import defaultdict
+
+POSITION_MODE = 0
+IMMEDIATE_MODE = 1
+RELATIVE_MODE = 2
+
+
 class StopOperation(Exception):
     pass
 
@@ -8,10 +15,15 @@ class InputEmpty(Exception):
 
 class IntCodeCPU:
     def __init__(self, instruction: list[int]):
-        self.memory = instruction
+        self.memory = defaultdict(lambda: 0, zip(range(len(instruction)), instruction))
+        self._relative_base = 0
         self.pointer = 0
         self.input = []
         self.output = []
+
+    @property
+    def memlist(self):
+        return list([self.memory[m] for m in range(max(self.memory.keys()) + 1)])
 
     def __repr__(self):
         return f"{self.pointer} - {self.input} - {self.output}"
@@ -26,11 +38,16 @@ class IntCodeCPU:
 
     def address(self, pos):
         mode = (self.cmd // (10 ** (pos + 2))) % 10
-        address = self.pointer + 1 + pos
-        if mode == 0:
-            return self.memory[address]
+        base_address = self.pointer + 1 + pos
+
+        if mode == POSITION_MODE:
+            return self.memory[base_address]
+        elif mode == IMMEDIATE_MODE:
+            return base_address
+        elif mode == RELATIVE_MODE:
+            return self._relative_base + self.memory[base_address]
         else:
-            return address
+            raise ValueError("unknown address mode")
 
     def run_program(self):
         while True:
@@ -92,6 +109,9 @@ class IntCodeCPU:
                 else:
                     self.memory[self.address(2)] = 0
                 self.pointer += 4
+            case 9:
+                self._relative_base += self.memory[self.address(0)]
+                self.pointer += 2
             case _:
                 self.pointer += 1
 

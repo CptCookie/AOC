@@ -4,20 +4,20 @@ from .IntCode import IntCodeCPU
 def test_add():
     programm = IntCodeCPU([1, 1, 1, 5, 99, 0])
     programm.run_program()
-    assert programm.memory == [1, 1, 1, 5, 99, 2]
+    assert programm.memlist == [1, 1, 1, 5, 99, 2]
 
 
 def test_multiplie():
     programm = IntCodeCPU([2, 0, 3, 5, 99, 0])
     programm.run_program()
-    assert programm.memory == [2, 0, 3, 5, 99, 10]
+    assert programm.memlist == [2, 0, 3, 5, 99, 10]
 
 
 def test_input():
     programm = IntCodeCPU([3, 3, 99, 0])
     programm.write_input(22)
     programm.run_program()
-    assert programm.memory == [3, 3, 99, 22]
+    assert programm.memlist == [3, 3, 99, 22]
 
 
 def test_output():
@@ -29,91 +29,97 @@ def test_output():
 def test_jump_if_true():
     programm = IntCodeCPU([1005, 3, 7, 1, 0, 0, 8, 99, 0])
     programm.run_program()
-    assert programm.memory == [1005, 3, 7, 1, 0, 0, 8, 99, 0]
+    assert programm.memlist == [1005, 3, 7, 1, 0, 0, 8, 99, 0]
 
 
 def test_jump_if_true_not():
     programm = IntCodeCPU([1005, 4, 7, 1, 0, 0, 8, 99, 0])
     programm.run_program()
-    assert programm.memory == [1005, 4, 7, 1, 0, 0, 8, 99, 2010]
+    assert programm.memlist == [1005, 4, 7, 1, 0, 0, 8, 99, 2010]
 
 
 def test_jump_if_false():
     programm = IntCodeCPU([1006, 4, 7, 1, 0, 0, 8, 99, 0])
     programm.run_program()
-    assert programm.memory == [1006, 4, 7, 1, 0, 0, 8, 99, 0]
+    assert programm.memlist == [1006, 4, 7, 1, 0, 0, 8, 99, 0]
 
 
 def test_jump_if_false_not():
     programm = IntCodeCPU([1006, 3, 7, 1, 0, 0, 8, 99, 0])
     programm.run_program()
-    assert programm.memory == [1006, 3, 7, 1, 0, 0, 8, 99, 2012]
+    assert programm.memlist == [1006, 3, 7, 1, 0, 0, 8, 99, 2012]
 
 
 def test_less_then():
     programm = IntCodeCPU([7, 1, 0, 5, 99, 0])
     programm.run_program()
-    assert programm.memory == [7, 1, 0, 5, 99, 1]
+    assert programm.memlist == [7, 1, 0, 5, 99, 1]
 
 
-def test_less_ten_not():
+def test_less_then_not():
     programm = IntCodeCPU([7, 0, 1, 5, 99, 0])
     programm.run_program()
-    assert programm.memory == [7, 0, 1, 5, 99, 0]
+    assert programm.memlist == [7, 0, 1, 5, 99, 0]
 
 
 def test_equal():
     programm = IntCodeCPU([8, 0, 0, 5, 99, 0])
     programm.run_program()
-    assert programm.memory == [8, 0, 0, 5, 99, 1]
+    assert programm.memlist == [8, 0, 0, 5, 99, 1]
 
 
 def test_equal_not():
     programm = IntCodeCPU([8, 0, 1, 5, 99, 0])
     programm.run_program()
-    assert programm.memory == [8, 0, 1, 5, 99, 0]
+    assert programm.memlist == [8, 0, 1, 5, 99, 0]
 
 
 def test_address_add_immediate():
     programm = IntCodeCPU([1101, 3, 4, 5, 99, 0])
     programm.run_program()
-    assert programm.memory == [1101, 3, 4, 5, 99, 7]
+    assert programm.memlist == [1101, 3, 4, 5, 99, 7]
 
 
 def test_address_multi_immediate():
     programm = IntCodeCPU([1102, 3, 4, 5, 99, 0])
     programm.run_program()
-    assert programm.memory == [1102, 3, 4, 5, 99, 12]
+    assert programm.memlist == [1102, 3, 4, 5, 99, 12]
+
+
+def test_realtive_adjust_mode():
+    cpu = IntCodeCPU([109, 2, 99])
+    cpu.run_program()
+    assert cpu._relative_base == 2
 
 
 def test_intcode_sequence_1():
     programm = IntCodeCPU([1, 0, 0, 0, 99])
     programm.run_program()
-    assert programm.memory == [2, 0, 0, 0, 99]
+    assert programm.memlist == [2, 0, 0, 0, 99]
 
 
 def test_intcode_sequence_2():
     programm = IntCodeCPU([1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50])
     programm.run_program()
-    assert programm.memory == [3500, 9, 10, 70, 2, 3, 11, 0, 99, 30, 40, 50]
+    assert programm.memlist == [3500, 9, 10, 70, 2, 3, 11, 0, 99, 30, 40, 50]
 
 
 def test_intcode_sequence_3():
     programm = IntCodeCPU([2, 3, 0, 3, 99])
     programm.run_program()
-    assert programm.memory == [2, 3, 0, 6, 99]
+    assert programm.memlist == [2, 3, 0, 6, 99]
 
 
 def test_intcode_sequence_4():
     programm = IntCodeCPU([2, 4, 4, 5, 99, 0])
     programm.run_program()
-    assert programm.memory == [2, 4, 4, 5, 99, 9801]
+    assert programm.memlist == [2, 4, 4, 5, 99, 9801]
 
 
 def test_intcode_sequence_5():
     programm = IntCodeCPU([1, 1, 1, 4, 99, 5, 6, 0, 99])
     programm.run_program()
-    assert programm.memory == [30, 1, 1, 4, 2, 5, 6, 0, 99]
+    assert programm.memlist == [30, 1, 1, 4, 2, 5, 6, 0, 99]
 
 
 def test_jump_sequence_1():
@@ -243,3 +249,17 @@ def test_jump_biggest_sequence_3():
     programm.write_input(9)
     programm.run_program()
     assert programm.output.pop() == 1001
+
+
+def test_relative_mode_seq_1():
+    program = [109, 1, 204, -1, 1001, 100, 1, 100, 1008, 100, 16, 101, 1006, 101, 0, 99]
+    cpu = IntCodeCPU(program)
+    cpu.run_program()
+    assert cpu.output == program
+
+
+def test_relative_mode_seq_2():
+    program = [1102, 34915192, 34915192, 7, 4, 7, 99, 0]
+    cpu = IntCodeCPU(program)
+    cpu.run_program()
+    assert 1_000_000_000_000_000 <= cpu.output[0] < 10_000_000_000_000_000

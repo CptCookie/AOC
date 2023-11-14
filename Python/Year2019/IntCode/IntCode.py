@@ -2,6 +2,10 @@ class StopOperation(Exception):
     pass
 
 
+class InputEmpty(Exception):
+    pass
+
+
 class IntCodeProgramm:
     def __init__(self, instruction: list[int]):
         self.memory = instruction
@@ -9,17 +13,21 @@ class IntCodeProgramm:
         self.input = []
         self.output = []
 
+    def __repr__(self):
+        return f"{self.pointer} - {self.input} - {self.output}"
+
     @property
     def cmd(self):
-        return f"{self.memory[self.pointer]:05d}"
+        return self.memory[self.pointer]
 
     @property
     def opcode(self):
-        return self.cmd[-2:]
+        return self.memory[self.pointer] % 100
 
     def address(self, pos):
+        mode = (self.cmd // (10 ** (pos + 2))) % 10
         address = self.pointer + 1 + pos
-        if self.cmd[2 - pos] == "0":
+        if mode == 0:
             return self.memory[address]
         else:
             return address
@@ -33,48 +41,51 @@ class IntCodeProgramm:
 
     def run_command(self):
         match self.opcode:
-            case "99":
+            case 99:
                 raise StopOperation()
-            case "01":
+            case 1:
                 self.memory[self.address(2)] = (
                     self.memory[self.address(0)] + self.memory[self.address(1)]
                 )
                 self.pointer += 4
-            case "02":
+            case 2:
                 # multiplie
                 self.memory[self.address(2)] = (
                     self.memory[self.address(0)] * self.memory[self.address(1)]
                 )
                 self.pointer += 4
-            case "03":
+            case 3:
                 # read input
-                value = self.input.pop()
+                if not self.input:
+                    raise InputEmpty()
+
+                value = self.input.pop(0)  # popleft fifo
                 self.memory[self.address(0)] = value
                 self.pointer += 2
-            case "04":
+            case 4:
                 # write output
                 self.output.append(self.memory[self.address(0)])
                 self.pointer += 2
-            case "05":
+            case 5:
                 # jump if true
                 if self.memory[self.address(0)] > 0:
                     self.pointer = self.memory[self.address(1)]
                 else:
                     self.pointer += 3
-            case "06":
+            case 6:
                 # jump if false
                 if self.memory[self.address(0)] == 0:
                     self.pointer = self.memory[self.address(1)]
                 else:
                     self.pointer += 3
-            case "07":
+            case 7:
                 # less than
                 if self.memory[self.address(0)] < self.memory[self.address(1)]:
                     self.memory[self.address(2)] = 1
                 else:
                     self.memory[self.address(2)] = 0
                 self.pointer += 4
-            case "08":
+            case 8:
                 # equals
                 if self.memory[self.address(0)] == self.memory[self.address(1)]:
                     self.memory[self.address(2)] = 1

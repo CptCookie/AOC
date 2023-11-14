@@ -1,1 +1,1 @@
-from .IntCode import IntCodeProgramm
+from .IntCode import IntCodeProgramm, StopOperation, InputEmpty

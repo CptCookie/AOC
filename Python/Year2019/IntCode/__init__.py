@@ -1,1 +1,1 @@
-from .IntCode import IntCodeProgramm, StopOperation, InputEmpty
+from .IntCode import IntCodeCPU, StopOperation, InputEmpty

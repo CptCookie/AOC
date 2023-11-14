@@ -1,7 +1,7 @@
 from copy import deepcopy
 from itertools import permutations
 
-from Year2019.IntCode import IntCodeProgramm, StopOperation, InputEmpty
+from Year2019.IntCode import IntCodeCPU, StopOperation, InputEmpty
 
 
 def parse_input(aoc_input: str) -> list[int]:
@@ -11,10 +11,10 @@ def parse_input(aoc_input: str) -> list[int]:
 def run_amps(instr: list[int], inputs: list[int]):
     last_value = 0
     for n in inputs:
-        cpu = IntCodeProgramm(instr)
+        cpu = IntCodeCPU(instr)
         cpu.input.append(n)
         cpu.input.append(last_value)
-        cpu.run_programm()
+        cpu.run_program()
         last_value = cpu.output.pop()
 
     return last_value
@@ -25,7 +25,7 @@ def run_amps_loop(instr: list[int], inputs: list[int]):
 
     # build and connect amps
     for i, p in enumerate(inputs):
-        cpu = IntCodeProgramm(deepcopy(instr))
+        cpu = IntCodeCPU(deepcopy(instr))
 
         if i > 0:
             cpu.input = amp_loop[i - 1].output

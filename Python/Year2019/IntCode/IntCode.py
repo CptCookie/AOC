@@ -6,7 +6,7 @@ class InputEmpty(Exception):
     pass
 
 
-class IntCodeProgramm:
+class IntCodeCPU:
     def __init__(self, instruction: list[int]):
         self.memory = instruction
         self.pointer = 0
@@ -32,7 +32,7 @@ class IntCodeProgramm:
         else:
             return address
 
-    def run_programm(self):
+    def run_program(self):
         while True:
             try:
                 self.run_command()

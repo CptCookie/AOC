@@ -1,33 +1,42 @@
 import re
+from typing import TypeAlias
+
+Section: TypeAlias = list[tuple[int, int, int]]
+Range: TypeAlias = tuple[int, int]
 
 
-def parse_input(aoc_input: str) -> ([int], [[(int, int, int)]]):
+def parse_input(aoc_input: str) -> tuple[list[int], list[Section]]:
     seeds = []
-    maps = []
+    maps: list[Section] = []
 
     for i, s in enumerate(aoc_input.split("\n\n")):
         if i == 0:
             seeds = [int(n) for n in s.split(" ") if n.isalnum()]
 
         else:
-            section = []
+            section: Section = []
             for m in re.finditer("(\d+) (\d+) (\d+)", s):
-                section.append(tuple(int(n) for n in m.groups()))
+                match_group = m.groups()
+                section.append(
+                    (
+                        int(match_group[0]),
+                        int(match_group[1]),
+                        int(match_group[2]),
+                    )
+                )
             maps.append(section)
 
     return seeds, maps
 
 
-def map_value_by_section(value: int, maps: [(int, int, int)]) -> int:
+def map_value_by_section(value: int, maps: Section) -> int:
     for dstart, sstart, r in maps:
         if sstart <= value <= sstart + r:
             return dstart + value - sstart
     return value
 
 
-def map_range_by_section(
-    r: tuple[int, int], maps: [(int, int, int)]
-) -> [tuple[int, int]]:
+def map_range_by_section(r: Range, maps: Section) -> list[Range]:
     mapped_ranges = []
     rstart, rend = r
 
@@ -54,13 +63,13 @@ def map_range_by_section(
     return mapped_ranges
 
 
-def map_value_by_alma(value: int, almananch: [[(int, int, int)]]):
+def map_value_by_alma(value: int, almananch: list[Section]):
     for section in almananch:
         value = map_value_by_section(value, section)
     return value
 
 
-def map_ranges_by_alma(ranges: [tuple[int, int]], almananch: [[(int, int, int)]]):
+def map_ranges_by_alma(ranges: list[Range], almananch: list[Section]):
     for section in almananch:
         n_range = []
         for r in ranges:
@@ -70,13 +79,13 @@ def map_ranges_by_alma(ranges: [tuple[int, int]], almananch: [[(int, int, int)]]
     return ranges
 
 
-def solution_1(aoc_input: str):
+def solution_1(aoc_input: str) -> int:
     seeds, alma = parse_input(aoc_input)
     results = [map_value_by_alma(v, alma) for v in seeds]
     return min(results)
 
 
-def solution_2(aoc_input: str):
+def solution_2(aoc_input: str) -> int:
     seeds, alma = parse_input(aoc_input)
     seed_ranges = [(start, start + l) for start, l in zip(*[iter(seeds)] * 2)]
     result_ranges = map_ranges_by_alma(seed_ranges, alma)

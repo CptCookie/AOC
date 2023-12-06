@@ -16,7 +16,7 @@ def parse_input(aoc_input: str) -> list[str]:
 
 
 def find_number(line: str) -> int:
-    first = None
+    first = ""
     for i, c in enumerate(line):
         if c.isdigit():
             first = c
@@ -24,17 +24,17 @@ def find_number(line: str) -> int:
             if line[: i + 1].endswith(num):
                 first = number_words[num]
                 break
-        if first:
+        if first != "":
             break
 
-    last = None
+    last = ""
     for i in range(len(line) - 1, -1, -1):
         if line[i].isdigit():
             last = line[i]
         for num in number_words:
             if line[i:].startswith(num):
                 last = number_words[num]
-        if last:
+        if last != "":
             break
 
     return int(first + last)

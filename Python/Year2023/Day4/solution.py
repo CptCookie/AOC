@@ -1,4 +1,7 @@
-def parse_input(aoc_input: str) -> list[tuple]:
+from typing import Sequence
+
+
+def parse_input(aoc_input: str) -> Sequence[tuple[set[int], set[int]]]:
     cards = []
     for line in aoc_input.strip().splitlines():
         _, card = line.split(": ")
@@ -9,7 +12,7 @@ def parse_input(aoc_input: str) -> list[tuple]:
     return cards
 
 
-def solution_1(aoc_input: str):
+def solution_1(aoc_input: str) -> int:
     cards = parse_input(aoc_input)
     score = 0
 
@@ -20,7 +23,7 @@ def solution_1(aoc_input: str):
     return score
 
 
-def solution_2(aoc_input: str):
+def solution_2(aoc_input: str) -> int:
     cards = parse_input(aoc_input)
     card_nums = [1 for _ in cards]
 

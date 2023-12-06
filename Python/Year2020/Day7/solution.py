@@ -49,7 +49,11 @@ def number_bags(search_color, rules) -> int:
     return sum([number_bags(n, rules) * color_rule[n] for n in color_rule]) + 1
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
     rules = parse_input([n for n in puzzle_input.split("\n") if n != ""])
-    print(f'solution 1: {len(contained_by("shiny gold", rules))}')
-    print(f'solution 2: {number_bags("shiny gold", rules)-1}')
+    return len(contained_by("shiny gold", rules))
+
+
+def solution_2(puzzle_input):
+    rules = parse_input([n for n in puzzle_input.split("\n") if n != ""])
+    return number_bags("shiny gold", rules) - 1

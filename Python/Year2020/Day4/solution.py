@@ -38,8 +38,13 @@ def validate_field(field, value):
     return match is not None and match.group() == value
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
     puzzle_input = [n for n in puzzle_input.split("\n")][:-1]
     passports = parse_passports(puzzle_input)
-    print(f"solution 1: {sum([check_passport(n) for n in passports])}")
-    print(f"solution 2: {sum([check_passport(n, validation=True) for n in passports])}")
+    return sum([check_passport(n) for n in passports])
+
+
+def solution_2(puzzle_input):
+    puzzle_input = [n for n in puzzle_input.split("\n")][:-1]
+    passports = parse_passports(puzzle_input)
+    return sum([check_passport(n, validation=True) for n in passports])

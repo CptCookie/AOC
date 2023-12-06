@@ -1,8 +1,4 @@
-from const import token
-from itertools import chain, combinations
-
-
-def get_differnces(adapters: [int]):
+def get_differnces(adapters: list[int]):
     dif = [0, 0, 0]
     for n, elem in enumerate(adapters[1:]):
         dif[elem - adapters[n] - 1] += 1
@@ -22,10 +18,13 @@ def number_valid_combinations(adapters):
     return combinations
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
     adapters = sorted([int(n) for n in puzzle_input.split("\n") if n != ""])
     dif = get_differnces([0] + adapters + [max(adapters) + 3])
-    print(f"solution 1: {dif[0] * dif[2]}")
-    print(
-        f"solution 2: {number_valid_combinations([0] + adapters + [max(adapters)+3])}"
-    )
+    return dif[0] * dif[2]
+
+
+def solution_2(puzzle_input):
+    adapters = sorted([int(n) for n in puzzle_input.split("\n") if n != ""])
+    dif = get_differnces([0] + adapters + [max(adapters) + 3])
+    return number_valid_combinations([0] + adapters + [max(adapters) + 3])

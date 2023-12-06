@@ -13,7 +13,11 @@ def three_numbers(puzzle_input):
                     return n * m * o
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
     puzzle_input = [int(n) for n in puzzle_input.split("\n") if n != ""]
-    print(f"solution 1: {two_numbers(puzzle_input)}")
-    print(f"solution 2: {three_numbers(puzzle_input)}")
+    return two_numbers(puzzle_input)
+
+
+def solution_2(puzzle_input):
+    puzzle_input = [int(n) for n in puzzle_input.split("\n") if n != ""]
+    return three_numbers(puzzle_input)

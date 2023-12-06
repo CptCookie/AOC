@@ -83,7 +83,7 @@ class Ship:
         else:
             self.move_direction(self.direction, distance)
 
-    def manouver(self, manovers: [str]):
+    def manouver(self, manovers: list[str]):
         for move in manovers:
             if move[0] in DIRECTIONS:
                 self.move_direction(move[0], int(move[1:]))
@@ -93,12 +93,15 @@ class Ship:
                 self.forward(int(move[1:]))
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
     puzzle_input = [n for n in puzzle_input.split("\n") if n != ""]
     ship = Ship()
     ship.manouver(puzzle_input)
-    print(f"solution 1: {ship.distance}")
+    return ship.distance
 
+
+def solution_2(puzzle_input):
+    puzzle_input = [n for n in puzzle_input.split("\n") if n != ""]
     ship = Ship(waypoint_nav=True)
     ship.manouver(puzzle_input)
-    print(f"solution 2: {ship.distance}")
+    return ship.distance

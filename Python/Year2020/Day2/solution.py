@@ -30,7 +30,11 @@ def count_new_policy(data_input):
     return counter
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
     puzzle_input = [n.split(": ") for n in puzzle_input.split("\n") if n != ""]
-    print(f"solution 1: {count_old_policy(puzzle_input)}")
-    print(f"solution 2: {count_new_policy(puzzle_input)}")
+    return count_old_policy(puzzle_input)
+
+
+def solution_2(puzzle_input):
+    puzzle_input = [n.split(": ") for n in puzzle_input.split("\n") if n != ""]
+    return count_new_policy(puzzle_input)

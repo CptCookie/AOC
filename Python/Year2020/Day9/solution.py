@@ -1,13 +1,4 @@
-import requests
-from const import token
 import itertools
-
-
-def get_aoc_input():
-    r = requests.get(
-        "https://adventofcode.com/2020/day/9/input", cookies={"session": token}
-    )
-    return [int(n) for n in r.content.decode().split("\n") if n != ""]
 
 
 def is_combination_of(number, combinable):
@@ -36,10 +27,14 @@ def find_enryption_weakness(number, sequenz):
             return combination
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
     sequenz = [int(n) for n in puzzle_input.split("\n") if n != ""]
     fail_number = search_invalid(sequenz)
-    print(f"solution 1: {fail_number}")
+    return fail_number
 
+
+def solution_2(puzzle_input):
+    sequenz = [int(n) for n in puzzle_input.split("\n") if n != ""]
+    fail_number = search_invalid(sequenz)
     encrypt_weakness = find_enryption_weakness(fail_number, sequenz)
-    print(f"solution 2: {min(encrypt_weakness) + max(encrypt_weakness)}")
+    return min(encrypt_weakness) + max(encrypt_weakness)

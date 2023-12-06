@@ -1,7 +1,4 @@
-import requests
-
-
-def get_earlyest_bus(arival, busses: [int]) -> (int, int):
+def get_earlyest_bus(arival, busses: list[int]) -> tuple[int, int]:
     takeable = [
         (n, m)
         for n in range(arival, arival + max(busses))
@@ -11,7 +8,7 @@ def get_earlyest_bus(arival, busses: [int]) -> (int, int):
     return min(takeable, key=lambda x: x[0])
 
 
-def solution_1(puzzle_input):
+def part_1(puzzle_input):
     arival = int(puzzle_input[0])
     busses = [int(n) for n in puzzle_input[1].split(",") if n != "x"]
     bus = get_earlyest_bus(arival, busses)
@@ -26,7 +23,7 @@ def valid_solution(bus_Ids, start_time):
     return True
 
 
-def soliution_2(puzzle_input):
+def part_2(puzzle_input):
     bus_ids = [int(n) if n != "x" else -1 for n in puzzle_input.split(",")]
     max_id = max(bus_ids)
     for time in bus_tick(max_id):
@@ -42,7 +39,11 @@ def bus_tick(tick):
         yield n * tick
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
     puzzle_input = [n for n in puzzle_input.split("\n") if n != ""]
-    print(f"solution 1: {solution_1(puzzle_input)}")
-    # print(f"solution 2: {soliution_2(puzzle_input[1])}")
+    return part_1(puzzle_input)
+
+
+def solution_2(puzzle_input):
+    puzzle_input = [n for n in puzzle_input.split("\n") if n != ""]
+    return part_2(puzzle_input[1])  # incomplete

@@ -1,5 +1,4 @@
 import re
-from const import token
 
 FRONT_HALF = "F"
 BACK_HALF = "B"
@@ -23,12 +22,17 @@ def get_seat(seat_code):
     return int(seat_code, base=2)
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
     all_IDs = [get_ID(n) for n in puzzle_input.split("\n") if n != ""]
     all_IDs = sorted(all_IDs)
 
-    print(f"solution 1: {max(all_IDs)}")
+    return max(all_IDs)
+
+
+def solution_2(puzzle_input):
+    all_IDs = [get_ID(n) for n in puzzle_input.split("\n") if n != ""]
+    all_IDs = sorted(all_IDs)
 
     for n, m in enumerate(all_IDs[:-1]):
         if all_IDs[n + 1] - m == 2:
-            print(f"solution 2: {m + 1}")
+            return m + 1

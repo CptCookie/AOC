@@ -47,7 +47,11 @@ def fix_bootcode(boot_code):
             return boot
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
     boot_code = parse_bootcode([n for n in puzzle_input.split("\n") if n != ""])
-    print(f"Solution 1: {run_boot(boot_code)[1]}")
-    print(f"Solution 2: {fix_bootcode(boot_code)[1]}")
+    return run_boot(boot_code)[1]
+
+
+def solution_2(puzzle_input):
+    boot_code = parse_bootcode([n for n in puzzle_input.split("\n") if n != ""])
+    return fix_bootcode(boot_code)[1]

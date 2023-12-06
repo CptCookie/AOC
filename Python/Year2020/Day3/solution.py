@@ -1,8 +1,9 @@
-import numpy
+import operator
+from functools import reduce
 
 
 class Map:
-    def __init__(self, rows: [str]):
+    def __init__(self, rows: list[str]):
         self.width = len(rows[0])
         self.rows = rows
 
@@ -18,10 +19,12 @@ class Map:
         return counter
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
     track_map = Map([n for n in puzzle_input.split("\n") if n != ""])
+    return track_map.trees_on_track(3)
 
-    print(f"solution 1: {track_map.trees_on_track(3)}")
 
+def solution_2(puzzle_input):
+    track_map = Map([n for n in puzzle_input.split("\n") if n != ""])
     tracks = [track_map.trees_on_track(n) for n in [1, 3, 5, 7, 0.5]]
-    print(f"solution 2: {numpy.prod(tracks)}")
+    return reduce(operator.mul, tracks, 1)

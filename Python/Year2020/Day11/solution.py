@@ -1,14 +1,4 @@
-import requests
-from const import token
-from itertools import chain, combinations
 from copy import deepcopy
-
-
-def get_aoc_input():
-    r = requests.get(
-        "https://adventofcode.com/2020/day/11/input", cookies={"session": token}
-    )
-    return r.content.decode()
 
 
 class Floor:
@@ -188,10 +178,13 @@ class Waiting_Area:
                 self.seats = newSeats
 
 
-def solve(puzzle_input):
+def solution_1(puzzle_input):
     area = Waiting_Area(puzzle_input)
     area.fill()
-    print(f"solution 1: {len([1 for n in area.seats if str(n)=='#'])}")
-    # area = Waiting_Area(puzzle_input)
-    # area.fill_v2()
-    # print(len([1 for n in area.seats if str(n)=='#']))
+    return len([1 for n in area.seats if str(n) == "#"])
+
+
+def solution_2(puzzle_input):
+    area = Waiting_Area(puzzle_input)
+    area.fill_v2()  # incomplete
+    return len([1 for n in area.seats if str(n) == "#"])

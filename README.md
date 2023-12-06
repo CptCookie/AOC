@@ -1,19 +1,10 @@
 # AOC
-<style>
-star{
-    color: #ffff66;
-    text-shadow: 0 0 5px #ffff66;
-    font-family: "Source Code Pro", monospace;
-    font-weight: 300;
-    font-size: 14pt;
-}
-</style>
 
 Advent of Code
 
 This is my collection of all of my Advent of Code solutions. They are organized by language and year.
 
-## Current Progress (<star>**</star> only)
+## Current Progress (<code>**</code> only)
 | year   | 2015                                                | 2016                                                | 2017                      | 2018                                                | 2019                                                | 2020                      | 2021                                                | 2022                                                | 2023                      |
 |--------|-----------------------------------------------------|-----------------------------------------------------|---------------------------|-----------------------------------------------------|-----------------------------------------------------|---------------------------|-----------------------------------------------------|-----------------------------------------------------|---------------------------|
 | Day 1  | ![Python](/assets/py.svg) ![Rust](/assets/rust.svg) | ![Python](/assets/py.svg) ![Rust](/assets/rust.svg) | ![Python](/assets/py.svg) | ![Python](/assets/py.svg) ![Rust](/assets/rust.svg) | ![Python](/assets/py.svg) ![Rust](/assets/rust.svg) | ![Python](/assets/py.svg) | ![Python](/assets/py.svg) ![Rust](/assets/rust.svg) | ![Python](/assets/py.svg) ![Rust](/assets/rust.svg) | ![Python](/assets/py.svg) |

@@ -22,7 +22,7 @@ def parse_total(aoc_input: str) -> tuple[int, int]:
     return time, dist
 
 
-def get_max_min_solution(record):
+def get_number_winning_moves(record):
     time, dist = record
     fix, root = time / 2, math.sqrt(time**2 / 4 - dist)
     solutions = (fix - root, fix + root)
@@ -31,9 +31,9 @@ def get_max_min_solution(record):
 
 def solution_1(aoc_input: str) -> int:
     records = parse_individual(aoc_input)
-    return reduce(operator.mul, (get_max_min_solution(r) for r in records), 1)
+    return reduce(operator.mul, (get_number_winning_moves(r) for r in records), 1)
 
 
 def solution_2(aoc_input: str) -> int:
     record = parse_total(aoc_input)
-    return get_max_min_solution(record)
+    return get_number_winning_moves(record)

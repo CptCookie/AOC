@@ -46,4 +46,4 @@ def solution_1(puzzle_input):
 
 def solution_2(puzzle_input):
     puzzle_input = [n for n in puzzle_input.split("\n") if n != ""]
-    return part_2(puzzle_input[1])  # incomplete
+    # return part_2(puzzle_input[1])  # incomplete

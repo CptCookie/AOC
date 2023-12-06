@@ -1,3 +1,4 @@
+import math
 import operator
 import re
 from functools import reduce
@@ -21,27 +22,18 @@ def parse_total(aoc_input: str) -> tuple[int, int]:
     return time, dist
 
 
-def get_num_win_moves(record: tuple[int, int]) -> int:
+def get_max_min_solution(record):
     time, dist = record
-    start, end = 0, 0
-
-    for hold in range(1, time):
-        if hold * (time - hold) > dist and not start:
-            start = hold
-
-        if (time - hold) * hold > dist and not end:
-            end = time - hold
-
-        if start and end:
-            return end - start + 1
-    return 0
+    fix, root = time / 2, math.sqrt(time**2 / 4 - dist)
+    solutions = (fix - root, fix + root)
+    return math.ceil(max(solutions)) - math.ceil(min(solutions))
 
 
 def solution_1(aoc_input: str) -> int:
     records = parse_individual(aoc_input)
-    return reduce(operator.mul, (get_num_win_moves(r) for r in records), 1)
+    return reduce(operator.mul, (get_max_min_solution(r) for r in records), 1)
 
 
 def solution_2(aoc_input: str) -> int:
     record = parse_total(aoc_input)
-    return get_num_win_moves(record)
+    return get_max_min_solution(record)

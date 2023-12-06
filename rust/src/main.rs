@@ -15,7 +15,7 @@ const TOKEN_FILE: &str = "./token";
 fn main() {
     let args = get_args();
 
-    let year = args.get_one::<u16>("year").unwrap();
+    let year = args.get_one::<u32>("year").unwrap();
     let day = args.get_one::<u8>("day");
     let token = args.get_one::<String>("token");
     let perf = args.get_flag("perf");
@@ -26,20 +26,20 @@ fn main() {
     }
 }
 
-fn run_aoc(year: &u16, day: Option<&u8>, token: &String, perf: bool) {
+fn run_aoc(year: &u32, day: Option<&u8>, token: &String, perf: bool) {
     match day {
         Some(d) => try_run_day(year, d, token, perf),
         None => run_year(year, token, perf),
     }
 }
 
-fn run_year(year: &u16, token: &String, perf: bool) {
+fn run_year(year: &u32, token: &String, perf: bool) {
     for day in 1..=25 {
         try_run_day(year, &day, token, perf);
     }
 }
 
-fn try_run_day(year: &u16, day: &u8, token: &String, perf: bool) {
+fn try_run_day(year: &u32, day: &u8, token: &String, perf: bool) {
     if let Some(s) = solutions::get_day(year, day) {
         let input = get_input(year, day, token);
         println!("Solving Advent of Code {year} Day {day}");
@@ -66,7 +66,7 @@ fn try_run_day(year: &u16, day: &u8, token: &String, perf: bool) {
     }
 }
 
-fn get_input(year: &u16, day: &u8, token: &String) -> String {
+fn get_input(year: &u32, day: &u8, token: &String) -> String {
     match load_input_file(year, day) {
         Ok(x) => x,
         Err(_) => {
@@ -77,7 +77,7 @@ fn get_input(year: &u16, day: &u8, token: &String) -> String {
     }
 }
 
-fn load_input_file(year: &u16, day: &u8) -> io::Result<String> {
+fn load_input_file(year: &u32, day: &u8) -> io::Result<String> {
     fs::read_to_string(format!("./cache/{year}-{day}"))
 }
 
@@ -88,7 +88,7 @@ fn load_token_file() -> Option<String> {
     None
 }
 
-fn write_input_file(year: &u16, day: &u8, data: &String) {
+fn write_input_file(year: &u32, day: &u8, data: &String) {
     if !Path::new(CACHE).exists() {
         let _ = fs::create_dir("./cache");
     }
@@ -97,7 +97,7 @@ fn write_input_file(year: &u16, day: &u8, data: &String) {
 }
 
 fn request_input_data(
-    year: &u16,
+    year: &u32,
     day: &u8,
     token: &str,
 ) -> Result<String, Box<dyn std::error::Error>> {
@@ -112,7 +112,7 @@ fn request_input_data(
 
 fn get_args() -> ArgMatches {
     return command!()
-        .arg(arg!([year] "year [2016..2023]").value_parser(value_parser!(u16).range(2015..2023)))
+        .arg(arg!([year] "year [2016..2024]").value_parser(value_parser!(u32).range(2015..2024)))
         .arg(
             arg!([day] "optional day [1..25]")
                 .required(false)

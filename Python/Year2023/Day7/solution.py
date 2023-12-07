@@ -26,14 +26,13 @@ class Hand:
 
     @property
     def type(self) -> HandType:
-        if not self.jokers:
-            unique = set(self.hand)
-        else:
-            unique = set(c for c in self.hand if c != "J")
+        unique = set(self.hand)
+        if self.jokers and "J" in unique:
+            unique.remove("J")
 
         multiples = tuple(c for c in unique if self.hand.count(c) > 1)
-
         if self.jokers and self.hand.count("J") > 0 and len(multiples) == 0:
+            # make the first card the multiple one b/c jokes have to go somewhere
             multiples = (self.hand[0],)
 
         match len(unique), len(multiples):
@@ -52,6 +51,7 @@ class Hand:
             case x, _ if x == 1:
                 return HandType.FIVE_OAK
             case x, _ if x == 0 and self.jokers:
+                # we only have jokers
                 return HandType.FIVE_OAK
 
         raise ValueError(f"To much cards: {self.hand}")
@@ -61,13 +61,13 @@ class Hand:
 
     def __lt__(self, other):
         if self.type == other.type:
+            # compare by face values
             for s, o in zip(self.hand, other.hand):
-                if CARD_ORDER.index(s) != CARD_ORDER.index(o) and not self.jokers:
-                    return CARD_ORDER.index(s) > CARD_ORDER.index(o)
-                elif CARD_ORDER.index(s) != CARD_ORDER.index(o) and self.jokers:
-                    return CARD_ORDER_JOKER.index(s) > CARD_ORDER_JOKER.index(o)
-
+                card_orders = CARD_ORDER_JOKER if self.jokers else CARD_ORDER
+                if card_orders.index(s) != card_orders.index(o):
+                    return card_orders.index(s) > card_orders.index(o)
         else:
+            # compare by combinations/types
             return self.type < other.type
 
 

@@ -61,7 +61,8 @@ def multi_route_len(instructions: str, nodes: NodeMap):
                 loops[idx] = n - last[idx]
 
             if all(l is not None for l in loops):
-                # all loops found
+                # all loops found, use lcm b/c loop is same length
+                # as getting to the end in the first place
                 return lcm(loops)
 
 

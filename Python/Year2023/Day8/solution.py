@@ -1,3 +1,5 @@
+import functools
+import math
 import re
 from itertools import cycle
 from math import gcd
@@ -36,13 +38,6 @@ def single_route_len(instr: str, nodes: NodeMap):
             current_node = nodes[current_node][1]
 
 
-def lcm(seq: list[int]) -> int:
-    value = 1
-    for n in seq:
-        value = value * n // gcd(value, n)
-    return value
-
-
 def multi_route_len(instructions: str, nodes: NodeMap):
     path_nodes = [n for n in nodes.keys() if n.endswith("A")]
     last: list[int | None] = [None for _ in path_nodes]
@@ -63,7 +58,7 @@ def multi_route_len(instructions: str, nodes: NodeMap):
             if all(l is not None for l in loops):
                 # all loops found, use lcm b/c loop is same length
                 # as getting to the end in the first place
-                return lcm(loops)
+                return int(functools.reduce(math.lcm, loops))
 
 
 def solution_1(aoc_input: str):

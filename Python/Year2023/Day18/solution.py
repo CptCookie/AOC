@@ -1,121 +1,81 @@
-import heapq
+from enum import Enum
+from typing import TypeVar, TypeAlias
 import re
-from collections import deque
-from typing import Iterable
 
-Coord2D = tuple[int, int]
-INPUT_PATTERN = r"([UDLR]) (\d+) \(#([\da-f]+)\)"
-DIRECTIONS = {
-    "U": (0, -1),
-    "D": (0, 1),
-    "R": (1, 0),
+
+HEX_DIR = {"0": "R", "1": "D", "2": "L", "3": "U"}
+
+MOVEMENT = {
+    "U": (0, 1),
+    "D": (0, -1),
     "L": (-1, 0),
+    "R": (1, 0),
 }
 
-
-def parse_input(aoc_input: str) -> list[tuple[str, int, str]]:
-    instructions = []
-    for m in re.finditer(INPUT_PATTERN, aoc_input):
-        direction, distance, color = m.groups()
-        instructions.append((direction, int(distance), color))
-    return instructions
+Position: TypeAlias = tuple[int, int]
+Vertex: TypeAlias = tuple[str, int]
 
 
-def dig_trench(instructions: list[tuple[str, int, str]]) -> set[Coord2D]:
-    trench = []
-
-    x, y = 0, 0
-    for d, dist, _ in instructions:
-        dx, dy = DIRECTIONS[d]
-        trench.extend([(x + dx * i, y + dy * i) for i in range(1, dist + 1)])
-        x, y = x + dx * dist, y + dy * dist
-    return set(trench)
+def parse_simple(aoc_input: str) -> list[Vertex]:
+    vertices = []
+    for match in re.finditer(r"([LDRU]) (\d+) \(#([\da-f]{6})\)", aoc_input):
+        o, d, _ = match.groups()
+        vertices.append((o, int(d)))
+    return vertices
 
 
-def dig_inside(trench: set[Coord2D], direct: str) -> set[Coord2D]:
-    fill_pos = get_fill_pos(direct)
-    for fill in fill_pos:
-        try:
-            dug: set[Coord2D] = dig_inside_from_pos(trench, fill)
-            return trench.union(dug)
-        except IndexError:
-            pass
+def parse_hex(aoc_input: str) -> list[Vertex]:
+    vertices = []
+    for match in re.finditer(r"([LDRU]) (\d+) \(#([\da-f]{6})\)", aoc_input):
+        _, _, h = match.groups()
+        l = int(h[:-1], 16)
+        d = HEX_DIR[h[-1]]
 
-    raise ValueError("Can not dir inside the trench")
-
-
-def dig_inside_from_pos(trench: set[Coord2D], fill: Coord2D) -> set[Coord2D]:
-    min_x, max_x = min(x for (x, _) in trench), max(x for (x, _) in trench)
-    min_y, max_y = min(y for (_, y) in trench), max(y for (_, y) in trench)
-
-    q = deque([fill])
-    dug = set()
-
-    while q:
-        x, y = q.popleft()
-
-        if min_x > x or x > max_x or min_y > y or y > max_y:
-            raise IndexError
-
-        if (x, y) not in dug:
-            dug.add((x, y))
-
-            for dx, dy in DIRECTIONS.values():
-                if (x + dx, y + dy) not in trench and (x + dx, y + dy) not in dug:
-                    q.append((x + dx, y + dy))
-    return dug
+        vertices.append((d, l))
+    return vertices
 
 
-def get_fill_pos(direct: str) -> list[Coord2D]:
-    x, y = DIRECTIONS[direct]
+def translate_vertices_to_pos(vertices: list[Vertex]) -> list[Position]:
+    pos = [(0, 0)]
+    last_pos = (0, 0)
 
-    if direct in ("R", "L"):
-        return [(x, y - 1), (x, y + 1)]
-    else:
-        return [(x + 1, y), (x, y)]
+    for orient, dist in vertices:
+        dpos = [m * dist for m in MOVEMENT[orient]]
+        new_pos = (last_pos[0] + dpos[0], last_pos[1] + dpos[1])
+        pos.append(new_pos)
+        last_pos = new_pos
 
-
-def print_lagoon(dig: Iterable[Coord2D]):
-    min_x, max_x = min(x for (x, _) in dig), max(x for (x, _) in dig)
-    min_y, max_y = min(y for (_, y) in dig), max(y for (_, y) in dig)
-
-    print(min_x, max_x, min_y, max_y)
-
-    for y in range(0, max_y - min_y + 1):
-        for x in range(0, max_x - min_x + 1):
-            if (x + min_x, y + min_y) in dig:
-                print("#", end="")
-            else:
-                print(".", end="")
-
-        print()
+    assert pos[-1] == (0, 0)
+    return pos
 
 
-TEST_INPUT = """R 6 (#70c710)
-D 5 (#0dc571)
-L 2 (#5713f0)
-D 2 (#d2c081)
-R 2 (#59c680)
-D 2 (#411b91)
-L 5 (#8ceee2)
-U 2 (#caa173)
-L 1 (#1b58a2)
-U 2 (#caa171)
-R 2 (#7807d2)
-U 3 (#a77fa3)
-L 2 (#015232)
-U 2 (#7a21e3)
-"""
+def circumflex(vertices: list[Vertex]) -> int:
+    return sum(d for _, d in vertices)
+
+
+def shoelace_surface(positions: list[Position]):
+    total = 0
+
+    for n, (x1, y1) in enumerate(positions[:-1]):
+        (x2, y2) = positions[n + 1]
+        total += x1 * y2 - x2 * y1
+
+    return 0.5 * abs(total)
+
+
+def get_lava_capa(vertices: list[Vertex]):
+    pos = translate_vertices_to_pos(vertices)
+    a = shoelace_surface(pos)
+    b = circumflex(vertices)
+    i = a - b / 2 + 1
+    return b + i
 
 
 def solution_1(aoc_input: str):
-    instr = parse_input(aoc_input)
-    trench = dig_trench(instr)
-    lagoon = dig_inside(trench, instr[0][0])
-    print_lagoon(lagoon)
-    return len(lagoon)
+    vertices = parse_simple(aoc_input)
+    return get_lava_capa(vertices)
 
 
 def solution_2(aoc_input: str):
-    input = parse_input(aoc_input)
-    return None
+    vertices = parse_hex(aoc_input)
+    return get_lava_capa(vertices)

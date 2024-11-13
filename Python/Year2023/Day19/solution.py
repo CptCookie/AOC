@@ -63,7 +63,6 @@ def get_valid_parts(parts: list[Part], workflows: Workflows) -> list[Part]:
     valid = []
 
     for p in parts:
-        print(p)
         flow = "in"
         while True:
             flow = get_flow_outcome(p, workflows[flow])

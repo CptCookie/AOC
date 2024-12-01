@@ -16,9 +16,8 @@ fn parse_line(line: &str) -> (i32, i32) {
     return (numbers[0], numbers[1]);
 }
 
-fn solution_1(numbers: &(Vec<i32>, Vec<i32>)) -> i32 {
-    let mut left = numbers.0.to_vec();
-    let mut right = numbers.1.to_vec();
+fn solution_1(numbers: &mut (Vec<i32>, Vec<i32>)) -> i32 {
+    let (left, right) = numbers;
     left.sort();
     right.sort();
 
@@ -38,8 +37,8 @@ fn main() {
     let mut file = File::open("input.txt").unwrap();
     let mut input: String = String::from("");
     let _ = file.read_to_string(&mut input);
-    let numbers = parse_input(&input);
-    println!("solution 1: {}", solution_1(&numbers));
+    let mut numbers = parse_input(&input);
+    println!("solution 1: {}", solution_1(&mut numbers));
     println!("solution 2: {}", solution_2(&numbers));
 }
 

@@ -48,8 +48,8 @@ mod tests {
 
     #[test]
     fn test_solution_1() {
-        let numbers = (vec![3, 4, 2, 1, 3, 3], vec![4, 3, 5, 3, 9, 3]);
-        let result = solution_1(&numbers);
+        let mut numbers = (vec![3, 4, 2, 1, 3, 3], vec![4, 3, 5, 3, 9, 3]);
+        let result = solution_1(&mut numbers);
         assert!(result == 11, "wrong result {}", result)
     }
 

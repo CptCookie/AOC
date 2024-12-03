@@ -1,6 +1,4 @@
-from .solution import solution_1, solution_2, parse_do
-
-
+from .solution import solution_1, solution_2
 
 
 def test_solution_1():

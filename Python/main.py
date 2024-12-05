@@ -1,5 +1,4 @@
 import requests
-from collections import namedtuple
 from typing import Callable
 import argparse
 import os
@@ -62,20 +61,28 @@ def solve_puzzle(year, day, run_test=False, measure_runtime=False):
         pytest.main(["-q", f"Year{year}/Day{day}"])
     else:
         puzzle_string = get_puzzel_input(year, day)
+        run_time = 0
 
         try:
             puzzle_solution = importlib.import_module(f"Year{year}.Day{day}.solution")
             print(f"Solving Advent of Code {year} Day {day}:")
-            run_solution(puzzle_solution.solution_1, puzzle_string, measure_runtime)
-            run_solution(puzzle_solution.solution_2, puzzle_string, measure_runtime)
+            run_time += run_solution(
+                puzzle_solution.solution_1, puzzle_string, measure_runtime
+            )
+            run_time += run_solution(
+                puzzle_solution.solution_2, puzzle_string, measure_runtime
+            )
+            return run_time
 
-        except (ModuleNotFoundError) as e:
+        except ModuleNotFoundError as e:
             print(f"No Solution for the day found. {e}")
         except (SyntaxError, AttributeError) as e:
             print(f"Solution not ready: {e}")
 
 
-def run_solution(solve_function: Callable, puzzle_string: str, measure_runtime=False):
+def run_solution(
+    solve_function: Callable, puzzle_string: str, measure_runtime=False
+) -> int:
     start_time = perf_counter()
 
     solution = solve_function(puzzle_string)
@@ -87,13 +94,19 @@ def run_solution(solve_function: Callable, puzzle_string: str, measure_runtime=F
     else:
         print("")
 
+    return run_time
+
 
 if __name__ == "__main__":
     args = parser.parse_args()
     if args.day is None:
+        total_time = 0
         for day in range(26):
             if f"Day{day}" in os.listdir(f"./Year{args.year}"):
-                solve_puzzle(args.year, day, args.tests, args.runtime)
+                total_time += solve_puzzle(args.year, day, args.tests, args.runtime)
                 print("\n")
+
+        if args.runtime:
+            print(f"Total runtime: {total_time:.2f}ms")
     else:
         solve_puzzle(args.year, args.day, args.tests, args.runtime)

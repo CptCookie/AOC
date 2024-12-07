@@ -42,5 +42,7 @@ def solution_1(aoc_input: str):
 def solution_2(aoc_input: str):
     pairs = parse_input(aoc_input)
     return sum(
-        value for value, elements in pairs if is_combination_of(value, elements, True) > 0
+        value
+        for value, elements in pairs
+        if is_combination_of(value, elements, True) > 0
     )

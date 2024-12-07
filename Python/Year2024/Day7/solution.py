@@ -10,7 +10,7 @@ def parse_input(aoc_input: str):
     return pairs
 
 
-def is_combination_of(value: int, elements: tuple[int, ...], concat=False) -> int:
+def is_combination_of(value: int, elements: tuple[int, ...], concat=False) -> bool:
     last = elements[-1]
     remain = elements[:-1]
     digits = floor(log10(last)) + 1

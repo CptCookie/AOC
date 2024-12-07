@@ -1,4 +1,4 @@
-from math import ceil, log10
+from math import log10, floor
 
 
 def parse_input(aoc_input: str):
@@ -13,7 +13,7 @@ def parse_input(aoc_input: str):
 def is_combination_of(value: int, elements: tuple[int, ...], concat=False) -> int:
     last = elements[-1]
     remain = elements[:-1]
-    digits = ceil(log10(last + 0.5))  # 0.5 because log10(1) is 0
+    digits = floor(log10(last)) + 1
 
     if len(elements) == 1:
         return value == last

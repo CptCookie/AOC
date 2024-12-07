@@ -1,4 +1,4 @@
-from .solution import solution_1, solution_2, parse_input, n_combinations
+from .solution import solution_1, solution_2, parse_input, is_combination_of
 
 TEST_INPUT = """190: 10 19
 3267: 81 40 27
@@ -24,20 +24,20 @@ TEST_DATA = [
 ]
 
 
-def test_cominations():
-    assert n_combinations(*TEST_DATA[0])
-    assert n_combinations(3267, (81, 40, 27))
-    assert n_combinations(292, (11, 6, 16, 20))
+def test_combinations():
+    assert is_combination_of(*TEST_DATA[0])
+    assert is_combination_of(3267, (81, 40, 27))
+    assert is_combination_of(292, (11, 6, 16, 20))
 
 
 def test_concat_combinations():
-    assert n_combinations(11, (1, 1), True)
-    assert n_combinations(2691, (9, 260, 1), True)
-    assert n_combinations(156, (15, 6), True)
-    assert n_combinations(7290, (6, 8, 6, 15), True)
-    assert n_combinations(192, (17, 8, 14), True)
-    assert n_combinations(815, (8, 15), True)
-    assert n_combinations(51, (2, 3, 1), True)
+    assert is_combination_of(11, (1, 1), True)
+    assert is_combination_of(2691, (9, 260, 1), True)
+    assert is_combination_of(156, (15, 6), True)
+    assert is_combination_of(7290, (6, 8, 6, 15), True)
+    assert is_combination_of(192, (17, 8, 14), True)
+    assert is_combination_of(815, (8, 15), True)
+    assert is_combination_of(51, (2, 3, 1), True)
 
 
 def test_parsing():

@@ -1,5 +1,6 @@
 from collections import defaultdict
 from math import floor, log10
+from functools import cache
 
 
 def parse_input(aoc_input: str) -> dict[int, int]:
@@ -10,6 +11,7 @@ def parse_input(aoc_input: str) -> dict[int, int]:
     return stones
 
 
+@cache
 def get_new_stones(stone: int) -> list[int]:
     if stone == 0:
         return [1]

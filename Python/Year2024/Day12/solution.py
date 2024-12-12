@@ -75,6 +75,7 @@ def count_corners(pos, plots):
             corner not in plots and adjacent_1 not in plots and adjacent_2 not in plots
         )
 
+        # diagonal corner on corner
         corner_count += (
             corner in plots and adjacent_1 not in plots and adjacent_2 not in plots
         )

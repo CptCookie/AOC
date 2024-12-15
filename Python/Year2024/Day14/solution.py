@@ -43,7 +43,7 @@ def print_map(guards: list[tuple[int, int]], width: int, height: int) -> None:
 def get_christmas_tree(guards: list[Guard], width: int, height: int) -> int:
     t = 1
     dt = 1
-    iterations = []
+    deviations = []
 
     while True:
         guard_x, guard_y = [], []
@@ -57,11 +57,11 @@ def get_christmas_tree(guards: list[Guard], width: int, height: int) -> int:
         else:
             cluster_value = stdev(guard_y)
 
-        iterations.append(cluster_value)
-        mean_cluster = mean(iterations)
+        deviations.append(cluster_value)
+        mean_cluster = mean(deviations)
 
         if cluster_value < mean_cluster * 0.8 and dt == 1:
-            iterations = [stdev(guard_y)]
+            deviations = [stdev(guard_y)]
             dt = width
         elif cluster_value < mean_cluster * 0.8 and dt == width:
             return t

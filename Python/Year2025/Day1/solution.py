@@ -19,8 +19,10 @@ class Dial:
     def turn(self, direction, num):
         if direction == "L":
             self.turn_left(num)
-        else:
+        elif direction == "R":
             self.turn_right(num)
+        else:
+            raise ValueError(f"What direction is this suppose to be? [{direction}]")
 
     def turn_left(self, num):
         rotations = num // 100
@@ -29,7 +31,7 @@ class Dial:
         if num % 100 == self.number:
             self.zero_cnt += 1
 
-        if num % 100 > self.number and self.number != 0:
+        elif num % 100 > self.number and self.number != 0:
             self.zero_pass_cnt += 1
 
         self.number = (self.number - num) % 100
@@ -41,7 +43,7 @@ class Dial:
         if num % 100 == 100 - self.number:
             self.zero_cnt += 1
 
-        if num % 100 > 100 - self.number and self.number != 0:
+        elif num % 100 > 100 - self.number and self.number != 0:
             self.zero_pass_cnt += 1
 
         self.number = (self.number + num) % 100

@@ -13,32 +13,22 @@ def parse_input(aoc_input: str) -> list[range]:
     return product_ids
 
 
-def get_matching_ids(product_ids: range, pattern: re.Pattern):
+def get_matching_ids(product_ids: range, pattern: re.Pattern) -> list[int]:
     return [pid for pid in product_ids if pattern.match(str(pid))]
 
 
-def get_invalid_ids_complex(product_ids: range):
-    invalid_ids = []
-    pattern = re.compile(r"^(\d+)\1+$")
-
-    for pid in product_ids:
-        if pattern.match(str(pid)):
-            invalid_ids.append(pid)
-
-    return invalid_ids
+def calc_count_from_ranges(product_ids: list[range], match_pattern) -> int:
+    count = 0
+    for id_range in product_ids:
+        count += sum(get_matching_ids(id_range, match_pattern))
+    return count
 
 
 def solution_1(aoc_input: str):
     ranges = parse_input(aoc_input)
-    count = 0
-    for id_range in ranges:
-        count += sum(get_matching_ids(id_range, PATTERN_SOLUTION_2))
-    return count
+    return calc_count_from_ranges(ranges, PATTERN_SOLUTION_1)
 
 
 def solution_2(aoc_input: str):
     ranges = parse_input(aoc_input)
-    count = 0
-    for id_range in ranges:
-        count += sum(get_matching_ids(id_range, PATTERN_SOLUTION_2))
-    return count
+    return calc_count_from_ranges(ranges, PATTERN_SOLUTION_2)

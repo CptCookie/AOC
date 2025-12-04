@@ -1,12 +1,13 @@
-import requests
-from typing import Callable
 import argparse
-import os
 import importlib
-import pytest
+import os
 from time import perf_counter
-from config import token
+from typing import Callable
 
+import pytest
+import requests
+
+from config import token
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--year", "-y", help="year", type=int, required=True)
@@ -43,6 +44,9 @@ def read_input_from_file(year, day):
 
 
 def write_input_to_file(year, day, data):
+    if not os.path.isdir("./cache"):
+        os.mkdir("./cache")
+
     with open(f"./cache/{year}-{day}.txt", "w") as f:
         f.write(data)
 
@@ -56,9 +60,10 @@ def get_puzzel_input(year, day):
         return puzzle_input
 
 
-def solve_puzzle(year, day, run_test=False, measure_runtime=False):
+def solve_puzzle(year, day, run_test=False, measure_runtime=False) -> float:
     if run_test:
         pytest.main(["-q", f"Year{year}/Day{day}"])
+        return 0
     else:
         puzzle_string = get_puzzel_input(year, day)
         run_time = 0
@@ -79,10 +84,12 @@ def solve_puzzle(year, day, run_test=False, measure_runtime=False):
         except (SyntaxError, AttributeError) as e:
             print(f"Solution not ready: {e}")
 
+        return 0
+
 
 def run_solution(
     solve_function: Callable, puzzle_string: str, measure_runtime=False
-) -> int:
+) -> float:
     start_time = perf_counter()
 
     solution = solve_function(puzzle_string)

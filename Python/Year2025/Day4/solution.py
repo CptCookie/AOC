@@ -32,12 +32,16 @@ def get_adjacent_papers(storage_map: Map, pos: Position) -> list[Position]:
     return [(x, y) for (x, y) in adj if storage_map[y][x] == PAPER]
 
 
-def get_movable(storage_map: Map):
+def is_movable(storage_map: Map, pos: Position) -> bool:
+    x, y = pos
+    return storage_map[y][x] == PAPER and len(get_adjacent_papers(storage_map, pos)) < 4
+
+
+def get_movables(storage_map: Map) -> list[Position]:
     movable = []
     for y, line in enumerate(storage_map):
         for x, c in enumerate(line):
-            adjacent_paper = get_adjacent_papers(storage_map, (x, y))
-            if c == PAPER and len(adjacent_paper) < 4:
+            if is_movable(storage_map, (x, y)):
                 movable.append((x, y))
 
     return movable
@@ -45,17 +49,27 @@ def get_movable(storage_map: Map):
 
 def remove_rolls(storage_map: Map) -> int:
     remove_cnt = 0
-    while movable := get_movable(storage_map):
-        for x, y in movable:
-            remove_cnt += 1
-            storage_map[y][x] = EMPTY
+    movables = get_movables(storage_map)
 
-    return remove_cnt
+    while True:
+        check_stack = set()
+
+        for x, y in movables:
+            storage_map[y][x] = EMPTY
+            remove_cnt += 1
+            check_stack = check_stack.union(
+                set(get_adjacent_papers(storage_map, (x, y)))
+            )
+
+        movables = [pos for pos in check_stack if is_movable(storage_map, pos)]
+
+        if not movables:
+            return remove_cnt
 
 
 def solution_1(aoc_input: str):
     storage_map = parse_input(aoc_input)
-    return len(get_movable(storage_map))
+    return len(get_movables(storage_map))
 
 
 def solution_2(aoc_input: str):

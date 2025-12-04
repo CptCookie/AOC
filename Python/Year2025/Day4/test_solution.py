@@ -18,4 +18,4 @@ def test_solution_1():
 
 
 def test_solution_2():
-    assert solution_2(TEST_INPUT)
+    assert solution_2(TEST_INPUT) == 43

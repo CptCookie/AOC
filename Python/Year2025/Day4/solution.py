@@ -1,5 +1,5 @@
 Position = tuple[int, int]
-
+Map = list[list[str]]
 
 NEIGHBORS = (
     (-1, -1),
@@ -13,11 +13,11 @@ NEIGHBORS = (
 )
 
 
-def parse_input(aoc_input: str) -> list[list[str]]:
+def parse_input(aoc_input: str) -> Map:
     return [list(n) for n in aoc_input.splitlines() if n != ""]
 
 
-def get_adjacent_papers(paper_map: list[list[str]], pos: Position) -> list[Position]:
+def get_adjacent_papers(paper_map: Map, pos: Position) -> list[Position]:
     x, y = pos
     adj = []
 
@@ -29,7 +29,7 @@ def get_adjacent_papers(paper_map: list[list[str]], pos: Position) -> list[Posit
     return [(x, y) for (x, y) in adj if paper_map[y][x] == "@"]
 
 
-def get_movable(paper_map: list[list[str]]):
+def get_movable(paper_map: Map):
     movable = []
     for y, line in enumerate(paper_map):
         for x, c in enumerate(line):
@@ -40,7 +40,7 @@ def get_movable(paper_map: list[list[str]]):
     return movable
 
 
-def remove_rolls(paper_map: list[list[str]]) -> int:
+def remove_rolls(paper_map: Map) -> int:
     remove_cnt = 0
     while movable := get_movable(paper_map):
         for x, y in movable:

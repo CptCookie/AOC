@@ -1,4 +1,32 @@
-fn parse_input(input: &String) -> Vec<u16> {
+use crate::Solution;
+use solution_macro::mark_solution;
+
+#[mark_solution(2016, 3)]
+struct Day3;
+
+impl Solution for Day3 {
+    fn part1(&self, input: &str) -> String {
+        let triangles = parse_input(input);
+        count_valid_trianges(triangles).to_string()
+    }
+
+    fn part2(&self, input: &str) -> String {
+        let triangles = parse_input(input);
+        let reform_tri: Vec<u16> = vec![
+            triangles.iter().skip(0).step_by(3).collect::<Vec<&u16>>(),
+            triangles.iter().skip(1).step_by(3).collect(),
+            triangles.iter().skip(2).step_by(3).collect(),
+        ]
+        .iter()
+        .flatten()
+        .map(|v| **v)
+        .collect();
+
+        count_valid_trianges(reform_tri).to_string()
+    }
+}
+
+fn parse_input(input: &str) -> Vec<u16> {
     input
         .split_ascii_whitespace()
         .map(|num| num.parse::<u16>().unwrap())
@@ -16,24 +44,4 @@ fn count_valid_trianges(triangles: Vec<u16>) -> usize {
         .filter(|t| *t)
         .collect::<Vec<bool>>()
         .len()
-}
-
-pub fn part_1(input: &String) -> String {
-    let triangles = parse_input(input);
-    count_valid_trianges(triangles).to_string()
-}
-
-pub fn part_2(input: &String) -> String {
-    let triangles = parse_input(input);
-    let reform_tri: Vec<u16> = vec![
-        triangles.iter().skip(0).step_by(3).collect::<Vec<&u16>>(),
-        triangles.iter().skip(1).step_by(3).collect(),
-        triangles.iter().skip(2).step_by(3).collect(),
-    ]
-    .iter()
-    .flatten()
-    .map(|v| **v)
-    .collect();
-
-    count_valid_trianges(reform_tri).to_string()
 }

@@ -1,12 +1,20 @@
+use crate::Solution;
+use solution_macro::mark_solution;
 use std::collections::HashMap;
 
-pub fn part_1(input: &String) -> String {
-    let feq_changes = parse_input(input);
-    sum_freq(&feq_changes).to_string()
-}
-pub fn part_2(input: &String) -> String {
-    let feq_changes = parse_input(input);
-    fist_double(feq_changes).unwrap().to_string()
+#[mark_solution(2018, 1)]
+struct Day1;
+
+impl Solution for Day1 {
+    fn part1(&self, input: &str) -> String {
+        let feq_changes = parse_input(input);
+        sum_freq(&feq_changes).to_string()
+    }
+
+    fn part2(&self, input: &str) -> String {
+        let feq_changes = parse_input(input);
+        fist_double(feq_changes).unwrap().to_string()
+    }
 }
 
 fn fist_double(freq_change: Vec<i32>) -> Option<i32> {
@@ -33,7 +41,7 @@ fn sum_freq(freq_change: &Vec<i32>) -> i32 {
     freq_change.iter().sum()
 }
 
-fn parse_input(puzzle_input: &String) -> Vec<i32> {
+fn parse_input(puzzle_input: &str) -> Vec<i32> {
     let mut split: Vec<i32> = puzzle_input
         .split("\n")
         .map(|n| n.parse::<i32>().unwrap_or(0))

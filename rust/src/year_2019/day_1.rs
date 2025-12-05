@@ -1,4 +1,20 @@
-fn parse_input(input: &String) -> Vec<u32> {
+use crate::Solution;
+use solution_macro::mark_solution;
+
+#[mark_solution(2019, 1)]
+struct Day1;
+
+impl Solution for Day1 {
+    fn part1(&self, input: &str) -> String {
+        complete_fuel(&parse_input(input), false).to_string()
+    }
+
+    fn part2(&self, input: &str) -> String {
+        complete_fuel(&parse_input(input), true).to_string()
+    }
+}
+
+fn parse_input(input: &str) -> Vec<u32> {
     input
         .split_ascii_whitespace()
         .map(|word| word.parse::<u32>().unwrap())
@@ -31,24 +47,16 @@ fn complete_fuel(masses: &Vec<u32>, fuel_fuel: bool) -> u32 {
         .sum()
 }
 
-pub fn part_1(input: &String) -> String {
-    complete_fuel(&parse_input(input), false).to_string()
-}
-
-pub fn part_2(input: &String) -> String {
-    complete_fuel(&parse_input(input), true).to_string()
-}
-
 #[cfg(test)]
 mod test {
     use super::*;
 
     #[test]
     fn test_part_2() {
-        assert_eq!(part_2(&"1969".to_string()), 966.to_string());
-        assert_eq!(part_2(&"100756".to_string()), 50346.to_string());
+        assert_eq!(Day1 {}.part2(&"1969".to_string()), 966.to_string());
+        assert_eq!(Day1 {}.part2(&"100756".to_string()), 50346.to_string());
         assert_eq!(
-            part_2(&"1969\n100756".to_string()),
+            Day1 {}.part2(&"1969\n100756".to_string()),
             (966 + 50346).to_string()
         );
     }

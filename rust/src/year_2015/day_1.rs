@@ -1,4 +1,20 @@
-fn floor_sum(steps: &String) -> i32 {
+use crate::Solution;
+use solution_macro::mark_solution;
+
+#[mark_solution(2015, 1)]
+struct Day1;
+
+impl Solution for Day1 {
+    fn part1(&self, input: &str) -> String {
+        floor_sum(input).to_string()
+    }
+
+    fn part2(&self, input: &str) -> String {
+        find_floor(input, -1).unwrap().to_string()
+    }
+}
+
+fn floor_sum(steps: &str) -> i32 {
     let mut counter: i32 = 0;
     for step in steps.chars() {
         match step {
@@ -10,7 +26,7 @@ fn floor_sum(steps: &String) -> i32 {
     counter
 }
 
-fn find_floor(steps: &String, target_floor: i32) -> Option<usize> {
+fn find_floor(steps: &str, target_floor: i32) -> Option<usize> {
     let mut current_floor = 0;
     for (n, step) in steps.chars().enumerate() {
         match step {
@@ -24,14 +40,6 @@ fn find_floor(steps: &String, target_floor: i32) -> Option<usize> {
         }
     }
     None
-}
-
-pub fn part_1(input: &String) -> String {
-    floor_sum(input).to_string()
-}
-
-pub fn part_2(input: &String) -> String {
-    find_floor(input, -1).unwrap().to_string()
 }
 
 #[cfg(test)]

@@ -1,3 +1,40 @@
+use crate::Solution;
+use solution_macro::mark_solution;
+
+#[mark_solution(2021, 3)]
+struct Day3;
+
+impl Solution for Day3 {
+    fn part1(&self, input: &str) -> String {
+        let binarys = parse_input(input);
+        let mut bin_solution: Vec<char> = vec![];
+        for index in 0..binarys[0].len() {
+            bin_solution.push(common_bit_at(&binarys, index, true))
+        }
+
+        let gamma = i32::from_str_radix(&bin_solution.iter().collect::<String>(), 2).unwrap();
+        let epsilon = i32::from_str_radix(
+            &bin_solution
+                .iter()
+                .map(|e| match *e {
+                    '1' => '0',
+                    _ => '1',
+                })
+                .collect::<String>(),
+            2,
+        )
+        .unwrap();
+
+        return (gamma * epsilon).to_string();
+    }
+
+    fn part2(&self, input: &str) -> String {
+        let binarys = parse_input(input);
+        let gamma = filter_by_common_bit(&binarys, true).unwrap();
+        let epsilon = filter_by_common_bit(&binarys, false).unwrap();
+        (gamma * epsilon).to_string()
+    }
+}
 fn common_bit_at(binarys: &Vec<&str>, index: usize, most_common: bool) -> char {
     let one_count = binarys
         .iter()
@@ -28,37 +65,7 @@ fn filter_by_common_bit(binarys: &Vec<&str>, most_common: bool) -> Option<i32> {
     return None;
 }
 
-pub fn part_1(input: &String) -> String {
-    let binarys = parse_input(input);
-    let mut bin_solution: Vec<char> = vec![];
-    for index in 0..binarys[0].len() {
-        bin_solution.push(common_bit_at(&binarys, index, true))
-    }
-
-    let gamma = i32::from_str_radix(&bin_solution.iter().collect::<String>(), 2).unwrap();
-    let epsilon = i32::from_str_radix(
-        &bin_solution
-            .iter()
-            .map(|e| match *e {
-                '1' => '0',
-                _ => '1',
-            })
-            .collect::<String>(),
-        2,
-    )
-    .unwrap();
-
-    return (gamma * epsilon).to_string();
-}
-
-pub fn part_2(input: &String) -> String {
-    let binarys = parse_input(input);
-    let gamma = filter_by_common_bit(&binarys, true).unwrap();
-    let epsilon = filter_by_common_bit(&binarys, false).unwrap();
-    (gamma * epsilon).to_string()
-}
-
-fn parse_input(input: &String) -> Vec<&str> {
+fn parse_input(input: &str) -> Vec<&str> {
     input
         .split_ascii_whitespace()
         .filter(|x| x != &"")
@@ -75,7 +82,7 @@ mod test {
         let test_data = String::from(
             "00100\n11110\n10110\n10111\n10101\n01111\n00111\n11100\n10000\n11001\n00010\n01010\n",
         );
-        assert_eq!(part_1(&test_data), 198.to_string())
+        assert_eq!(Day3 {}.part1(&test_data), 198.to_string())
     }
 
     #[test]
@@ -83,6 +90,6 @@ mod test {
         let test_data = String::from(
             "00100\n11110\n10110\n10111\n10101\n01111\n00111\n11100\n10000\n11001\n00010\n01010\n",
         );
-        assert_eq!(part_2(&test_data), 230.to_string())
+        assert_eq!(Day3 {}.part2(&test_data), 230.to_string())
     }
 }

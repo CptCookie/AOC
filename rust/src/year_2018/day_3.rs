@@ -1,4 +1,52 @@
+use crate::Solution;
+use solution_macro::mark_solution;
 use std::{collections::HashMap, fmt::Debug};
+
+#[mark_solution(2018, 3)]
+struct Day3;
+impl Solution for Day3 {
+    fn part1(&self, input: &str) -> String {
+        // calculates the solution of AOC2018 day 3 part 1
+        let data = parse_input(input);
+        let mut claims: Vec<Square> = Vec::new();
+        let mut fabric: Fabric = Fabric::new();
+
+        for n in data.iter() {
+            claims.push(Square::new(n));
+        }
+
+        for claim in claims.iter() {
+            let points = claim.get_all_coord();
+
+            for p in points.iter() {
+                fabric.set(p, claim.id)
+            }
+        }
+
+        fabric.count_conflicts().to_string()
+    }
+
+    fn part2(&self, input: &str) -> String {
+        // calculates the solution of AOC2018 day 3 part 1
+        let data = parse_input(input);
+        let mut claims: Vec<Square> = Vec::new();
+        let mut fabric: Fabric = Fabric::new();
+
+        for n in data.iter() {
+            claims.push(Square::new(n));
+        }
+
+        for claim in claims.iter() {
+            let points = claim.get_all_coord();
+
+            for p in points.iter() {
+                fabric.set(p, claim.id)
+            }
+        }
+
+        format!("{:?}", fabric.find_legit_claim())
+    }
+}
 
 #[derive(Debug)]
 struct Point {
@@ -97,48 +145,6 @@ impl Square {
     }
 }
 
-pub fn part_1(input: &String) -> String {
-    // calculates the solution of AOC2018 day 3 part 1
-    let data = parse_input(input);
-    let mut claims: Vec<Square> = Vec::new();
-    let mut fabric: Fabric = Fabric::new();
-
-    for n in data.iter() {
-        claims.push(Square::new(n));
-    }
-
-    for claim in claims.iter() {
-        let points = claim.get_all_coord();
-
-        for p in points.iter() {
-            fabric.set(p, claim.id)
-        }
-    }
-
-    fabric.count_conflicts().to_string()
-}
-
-pub fn part_2(input: &String) -> String {
-    // calculates the solution of AOC2018 day 3 part 1
-    let data = parse_input(input);
-    let mut claims: Vec<Square> = Vec::new();
-    let mut fabric: Fabric = Fabric::new();
-
-    for n in data.iter() {
-        claims.push(Square::new(n));
-    }
-
-    for claim in claims.iter() {
-        let points = claim.get_all_coord();
-
-        for p in points.iter() {
-            fabric.set(p, claim.id)
-        }
-    }
-
-    format!("{:?}", fabric.find_legit_claim())
-}
-
-fn parse_input(input: &String) -> Vec<&str> {
+fn parse_input(input: &str) -> Vec<&str> {
     input.split("\n").filter(|l| l.len() > 0).collect()
 }

@@ -1,3 +1,36 @@
+use crate::Solution;
+use solution_macro::mark_solution;
+
+#[mark_solution(2016, 2)]
+struct Day2;
+
+impl Solution for Day2 {
+    fn part1(&self, input: &str) -> String {
+        let instructions = parse_data(input);
+        let keypad = vec![
+            vec!['1', '2', '3'],
+            vec!['4', '5', '6'],
+            vec!['7', '8', '9'],
+        ];
+        let start = (1, 1);
+        let code = get_code(&keypad, start, instructions);
+        code
+    }
+
+    fn part2(&self, input: &str) -> String {
+        let instructions = parse_data(input);
+        let keypad = vec![
+            vec!['X', 'X', '1', 'X', 'X'],
+            vec!['X', '2', '3', '4', 'X'],
+            vec!['5', '6', '7', '8', '9'],
+            vec!['X', 'A', 'B', 'C', 'X'],
+            vec!['X', 'X', 'D', 'X', 'X'],
+        ];
+        let start = (1, 1);
+        let code = get_code(&keypad, start, instructions);
+        code
+    }
+}
 fn get_next_pos(
     current_pos: (usize, usize),
     direction: char,
@@ -32,32 +65,6 @@ fn get_code(keypad: &Vec<Vec<char>>, start: (usize, usize), instructions: Vec<&s
     code.iter().collect()
 }
 
-pub fn part_1(input: &String) -> String {
-    let instructions = parse_data(input);
-    let keypad = vec![
-        vec!['1', '2', '3'],
-        vec!['4', '5', '6'],
-        vec!['7', '8', '9'],
-    ];
-    let start = (1, 1);
-    let code = get_code(&keypad, start, instructions);
-    code
-}
-
-pub fn part_2(input: &String) -> String {
-    let instructions = parse_data(input);
-    let keypad = vec![
-        vec!['X', 'X', '1', 'X', 'X'],
-        vec!['X', '2', '3', '4', 'X'],
-        vec!['5', '6', '7', '8', '9'],
-        vec!['X', 'A', 'B', 'C', 'X'],
-        vec!['X', 'X', 'D', 'X', 'X'],
-    ];
-    let start = (1, 1);
-    let code = get_code(&keypad, start, instructions);
-    code
-}
-
-fn parse_data(input: &String) -> Vec<&str> {
+fn parse_data(input: &str) -> Vec<&str> {
     input.split_terminator("\n").collect()
 }

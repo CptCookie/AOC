@@ -1,17 +1,25 @@
-pub fn part_1(input: &String) -> String {
-    parse_data(input)
-        .iter()
-        .map(|package| calc_wrapping_paper(package) as u32)
-        .sum::<u32>()
-        .to_string()
-}
+use crate::Solution;
+use solution_macro::mark_solution;
 
-pub fn part_2(input: &String) -> String {
-    parse_data(input)
-        .iter()
-        .map(|package| calc_ribbon(package) as u32)
-        .sum::<u32>()
-        .to_string()
+#[mark_solution(2015, 2)]
+struct Day2;
+
+impl Solution for Day2 {
+    fn part1(&self, input: &str) -> String {
+        parse_data(input)
+            .iter()
+            .map(|package| calc_wrapping_paper(package) as u32)
+            .sum::<u32>()
+            .to_string()
+    }
+
+    fn part2(&self, input: &str) -> String {
+        parse_data(input)
+            .iter()
+            .map(|package| calc_ribbon(package) as u32)
+            .sum::<u32>()
+            .to_string()
+    }
 }
 
 fn calc_wrapping_paper(size: &Vec<u16>) -> u16 {
@@ -27,7 +35,7 @@ fn calc_ribbon(size: &Vec<u16>) -> u16 {
     bow + ribbon
 }
 
-fn parse_data(data: &String) -> Vec<Vec<u16>> {
+fn parse_data(data: &str) -> Vec<Vec<u16>> {
     let lines: Vec<&str> = data.split("\n").filter(|x| x != &"").collect();
     let elements: Vec<Vec<u16>> = lines
         .iter()
@@ -38,11 +46,7 @@ fn parse_data(data: &String) -> Vec<Vec<u16>> {
 
 #[cfg(test)]
 mod test {
-    use super::calc_ribbon;
-    use super::calc_wrapping_paper;
-    use super::parse_data;
-    use super::part_1;
-    use super::part_2;
+    use super::*;
 
     #[test]
     fn test_parse_data() {
@@ -62,7 +66,7 @@ mod test {
     #[test]
     fn test_warp_package() {
         let data = String::from("2x3x4\n1x1x10\n");
-        assert_eq!(part_1(&data), String::from("101"))
+        assert_eq!(Day2 {}.part1(&data), String::from("101"))
     }
 
     #[test]
@@ -77,6 +81,6 @@ mod test {
     #[test]
     fn test_ribbon_package() {
         let data = String::from("2x3x4\n1x1x10\n");
-        assert_eq!(part_2(&data), String::from("48"))
+        assert_eq!(Day2 {}.part2(&data), String::from("48"))
     }
 }

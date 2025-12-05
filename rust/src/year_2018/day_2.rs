@@ -1,41 +1,48 @@
+use crate::Solution;
+use solution_macro::mark_solution;
 use std::collections::HashMap;
 
-pub fn part_1(input: &String) -> String {
-    let ids = parse_input(input);
-    let mut maps: Vec<HashMap<char, i32>> = Vec::new();
-    let mut twos: i32 = 0;
-    let mut threes: i32 = 0;
+#[mark_solution(2018, 2)]
+struct Day2;
 
-    for line in ids {
-        maps.push(get_map(line))
-    }
+impl Solution for Day2 {
+    fn part1(&self, input: &str) -> String {
+        let ids = parse_input(input);
+        let mut maps: Vec<HashMap<char, i32>> = Vec::new();
+        let mut twos: i32 = 0;
+        let mut threes: i32 = 0;
 
-    for map in &maps {
-        if containes_chars_ntimes(2, map) {
-            twos += 1;
+        for line in ids {
+            maps.push(get_map(line))
         }
 
-        if containes_chars_ntimes(3, map) {
-            threes += 1;
-        }
-    }
-    (twos * threes).to_string()
-}
+        for map in &maps {
+            if containes_chars_ntimes(2, map) {
+                twos += 1;
+            }
 
-pub fn part_2(input: &String) -> String {
-    let ids = parse_input(input);
-
-    for (n, line1) in ids.iter().enumerate() {
-        for line2 in ids[n..].iter() {
-            let comp = compare_lines(*line1, *line2);
-            match comp {
-                Some(n) => return n,
-                None => (),
+            if containes_chars_ntimes(3, map) {
+                threes += 1;
             }
         }
+        (twos * threes).to_string()
     }
 
-    String::from("")
+    fn part2(&self, input: &str) -> String {
+        let ids = parse_input(input);
+
+        for (n, line1) in ids.iter().enumerate() {
+            for line2 in ids[n..].iter() {
+                let comp = compare_lines(*line1, *line2);
+                match comp {
+                    Some(n) => return n,
+                    None => (),
+                }
+            }
+        }
+
+        String::from("")
+    }
 }
 
 fn compare_lines(line1: &str, line2: &str) -> Option<String> {
@@ -74,7 +81,7 @@ fn get_map(line: &str) -> HashMap<char, i32> {
     hash
 }
 
-fn parse_input(puzzle_input: &String) -> Vec<&str> {
+fn parse_input(puzzle_input: &str) -> Vec<&str> {
     let mut split: Vec<&str> = puzzle_input.split("\n").collect();
     split.pop();
     split

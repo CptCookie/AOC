@@ -1,25 +1,33 @@
+use crate::Solution;
+use solution_macro::mark_solution;
+
 type Postion = Vec<i32>;
 
-pub fn part_1(puzzle_input: &String) -> String {
-    get_unique(deliver_presents(puzzle_input)).len().to_string()
-}
+#[mark_solution(2015, 3)]
+struct Day3;
 
-pub fn part_2(puzzle_input: &String) -> String {
-    let mut santa_move: Vec<char> = Vec::with_capacity(puzzle_input.len() / 2);
-    let mut bot_move: Vec<char> = Vec::with_capacity(puzzle_input.len() / 2);
-
-    for (n, c) in puzzle_input.chars().enumerate() {
-        match n % 2 {
-            0 => santa_move.push(c),
-            _ => bot_move.push(c),
-        }
+impl Solution for Day3 {
+    fn part1(&self, input: &str) -> String {
+        get_unique(deliver_presents(input)).len().to_string()
     }
-    let mut pos: Vec<Postion> = deliver_presents(&santa_move.iter().collect::<String>());
-    pos.append(&mut deliver_presents(&bot_move.iter().collect::<String>()));
-    get_unique(pos).len().to_string()
+
+    fn part2(&self, input: &str) -> String {
+        let mut santa_move: Vec<char> = Vec::with_capacity(input.len() / 2);
+        let mut bot_move: Vec<char> = Vec::with_capacity(input.len() / 2);
+
+        for (n, c) in input.chars().enumerate() {
+            match n % 2 {
+                0 => santa_move.push(c),
+                _ => bot_move.push(c),
+            }
+        }
+        let mut pos: Vec<Postion> = deliver_presents(&santa_move.iter().collect::<String>());
+        pos.append(&mut deliver_presents(&bot_move.iter().collect::<String>()));
+        get_unique(pos).len().to_string()
+    }
 }
 
-fn deliver_presents(movements: &String) -> Vec<Postion> {
+fn deliver_presents(movements: &str) -> Vec<Postion> {
     let mut positions: Vec<Postion> = Vec::with_capacity(movements.len() + 1);
     positions.push(vec![0, 0]);
     for m in movements.chars() {

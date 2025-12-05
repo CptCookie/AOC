@@ -1,17 +1,24 @@
+use crate::Solution;
 use crypto::digest::Digest;
 use crypto::md5::Md5;
+use solution_macro::mark_solution;
 
-pub fn part_1(input: &String) -> String {
-    find_hash(&input, 5).unwrap().to_string()
+#[mark_solution(2015, 4)]
+struct Day4;
+
+impl Solution for Day4 {
+    fn part1(&self, input: &str) -> String {
+        find_hash(&input, 5).unwrap().to_string()
+    }
+
+    fn part2(&self, input: &str) -> String {
+        find_hash(&input, 6).unwrap().to_string()
+    }
 }
 
-pub fn part_2(input: &String) -> String {
-    find_hash(&input, 6).unwrap().to_string()
-}
-
-fn find_hash(message: &String, num_leed_zero: u8) -> Option<u64> {
+fn find_hash(message: &str, num_leed_zero: u8) -> Option<u64> {
     for n in 0..std::u64::MAX {
-        let mut new_message: String = message.clone();
+        let mut new_message: String = String::from(message);
         new_message.extend(n.to_string().chars());
         let mut hash = Md5::new();
         hash.input_str(&new_message);
@@ -39,7 +46,7 @@ mod test {
     use super::*;
 
     #[test]
-    fn tesf_find_hash() {
+    fn test_find_hash() {
         assert_eq!(find_hash(&String::from("abcdef"), 5), Some(609043));
         assert_eq!(find_hash(&String::from("pqrstuv"), 5), Some(1048970));
     }

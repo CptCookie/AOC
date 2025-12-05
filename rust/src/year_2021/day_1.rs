@@ -1,11 +1,19 @@
-pub fn part_1(input: &String) -> String {
-    let data = parse_data(input);
-    does_increment(&data, 1).to_string()
-}
+use crate::Solution;
+use solution_macro::mark_solution;
 
-pub fn part_2(input: &String) -> String {
-    let data = parse_data(input);
-    does_increment(&data, 3).to_string()
+#[mark_solution(2021, 1)]
+struct Day1;
+
+impl Solution for Day1 {
+    fn part1(&self, input: &str) -> String {
+        let data = parse_data(input);
+        does_increment(&data, 1).to_string()
+    }
+
+    fn part2(&self, input: &str) -> String {
+        let data = parse_data(input);
+        does_increment(&data, 3).to_string()
+    }
 }
 
 fn does_increment(deep_scan: &Vec<u16>, window: usize) -> usize {
@@ -16,7 +24,7 @@ fn does_increment(deep_scan: &Vec<u16>, window: usize) -> usize {
         .count()
 }
 
-fn parse_data(data: &String) -> Vec<u16> {
+fn parse_data(data: &str) -> Vec<u16> {
     data.split("\n")
         .filter(|x| x != &"")
         .map(|e| e.parse::<u16>().unwrap())

@@ -69,6 +69,7 @@ def solve_problem(problem: Problem) -> int:
 
 
 def solution_1(aoc_input: str):
+    #
     problems = parse_part_1(aoc_input)
     return sum(solve_problem(p) for p in problems)
 
